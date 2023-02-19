@@ -1,10 +1,14 @@
 <script setup>
 import Trivia from './components/Trivia.vue'
+import TriviaAPI from './components/TriviaAPI.vue'
 </script>
 
 <template>
   <div class="Game">
     <Trivia/>
+    <div>
+      <TriviaAPI/>
+    </div>
   </div>
 </template>
 
@@ -20,5 +24,8 @@ import Trivia from './components/Trivia.vue'
   align-items: center; 
 }
 
+.Game > div{
+  position: absolute;
+}
 
 </style>

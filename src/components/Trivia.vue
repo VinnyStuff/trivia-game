@@ -1,7 +1,33 @@
-<script setup>
+<script>
 import IconHelpCircle from './icons/IconHelpCircle.vue'
 
+export default {
+  methods:{
+    timer(){
+        let interval = setInterval(() => { //1000ms = 1seg
 
+        this.currentQuestionTimer--;
+            
+        }, 1000);
+    },
+    test(){
+    window.addEventListener('onload', function () {
+        console.log("load")
+    });
+    }
+  },
+   
+
+  data(){
+    return{
+    currentQuestionTimer: 5, //30
+    };
+  },
+
+  mounted(){
+    //this.timer();
+  },
+ }
 </script>
 
 <template>
@@ -13,8 +39,8 @@ import IconHelpCircle from './icons/IconHelpCircle.vue'
                     <h3>0/10</h3>
                 </div>
                 <div id="timer">
-                    <h1>30</h1>
-                    <v-progress-circular model-value="20" :size="41" :width="5"></v-progress-circular>
+                    <h1 v-if="currentQuestionTimer>0">{{ currentQuestionTimer }}</h1>
+                    <v-progress-circular model-value="20" :size="50" :width="5"></v-progress-circular>
                 </div>
             </div>
             <div id="current-question-theme">
