@@ -14,7 +14,7 @@ import IconHelpCircle from './icons/IconHelpCircle.vue'
                 </div>
                 <div id="timer">
                     <h1>30</h1>
-                    <v-progress-circular model-value="70" :size="70" :width="8"></v-progress-circular>
+                    <v-progress-circular model-value="20" :size="41" :width="5"></v-progress-circular>
                 </div>
             </div>
             <div id="current-question-theme">
