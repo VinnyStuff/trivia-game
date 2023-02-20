@@ -1,33 +1,42 @@
 <script>
 import IconHelpCircle from './icons/IconHelpCircle.vue'
 
+
+
 export default {
-  methods:{
-    timer(){
-        let interval = setInterval(() => { //1000ms = 1seg
-
-        this.currentQuestionTimer--;
-            
-        }, 1000);
-    },
-    test(){
-    window.addEventListener('onload', function () {
-        console.log("load")
-    });
-    }
-  },
-   
-
-  data(){
-    return{
-    currentQuestionTimer: 5, //30
+  data() {
+    return {
+      currentQuestionTimer: 5,
+      myData: {},
+      //questions: null,
     };
   },
+  async beforeMount() {
+    this.myData = await this.sendApiRequest();
 
-  mounted(){
-    //this.timer();
+    //this.questions = this.myData.question;
   },
- }
+  methods: {
+    async sendApiRequest() {
+        let response = await fetch('https://opentdb.com/api.php?amount=10');
+        let data = await response.json();
+        
+        //console.log(data.results[].question);
+
+        return data.results;
+    },
+    timer() {
+      let interval = setInterval(() => {
+        this.currentQuestionTimer--;
+      }, 1000);
+    },
+    decodeEntities(text) {
+      const el = document.createElement('textarea');
+      el.innerHTML = text;
+      return el.value;
+    },
+  },
+};
 </script>
 
 <template>
@@ -47,7 +56,7 @@ export default {
                 <h3>Technology</h3>
             </div>
             <div id="current-question-text">
-                <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae, tempora?</h1>
+                <h1>{{decodeEntities(myData) }}</h1>
             </div>
         </div>
         <div id="answers-container">
