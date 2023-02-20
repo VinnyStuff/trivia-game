@@ -1,33 +1,35 @@
 <script>
 
-async function sendApiRequest(){
+async function sendApiRequest(){ //add parameter index in things that have a number
     let response = await fetch ('https://opentdb.com/api.php?amount=10');
-    //console.log(response);
-    let data = await response.json()
-    //console.log(data);
-    console.log(data.results[0]);
-/*     console.log(data.results[0].category);
-    console.log(data.results[0].type);
-    console.log(data.results[0].difficulty);
-    console.log(data.results[0].incorrect_answers);
-    console.log(data.results[0].correct_answer); */
+    let data = await response.json();
+
+    return data;
+
+    /* let category = data.results[index].category;
+    let type = data.results[index].type;
+    let question = data.results[index].question;
+    let aswers = data.results[index].incorrect_answers;
+    aswers.push(data.results[index].correct_answer);
+    let correctAnswer = data.results[index].correct_answer; */
 }
 
+
 export default {
-  methods:{
-   
-  },
-  
-
-  data(){
-    return{
+    props: {
         
-    };
-  },
+    },
+    data(){
+        return{
+            myData: {}
+        }
+    },
+    async created(){
+        let response = await fetch ('https://opentdb.com/api.php?amount=10');
+        let data = await response.json();
 
-  mounted(){
-    sendApiRequest();
-  }
+        this.myData = data;
+    }
  }
 
 
