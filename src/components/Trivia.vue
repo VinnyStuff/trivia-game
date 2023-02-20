@@ -1,34 +1,48 @@
 <script>
 import IconHelpCircle from './icons/IconHelpCircle.vue'
 
-
-
 export default {
   data() {
     return {
-      currentQuestionTimer: 5,
-      myData: {},
-      //questions: null,
+        currentQuestionIndex: 0,
+        currentQuestionTimeStamp: 5,
     };
   },
-  async beforeMount() {
-    this.myData = await this.sendApiRequest();
-
-    //this.questions = this.myData.question;
-  },
   methods: {
-    async sendApiRequest() {
-        let response = await fetch('https://opentdb.com/api.php?amount=10');
-        let data = await response.json();
-        
-        //console.log(data.results[].question);
-
-        return data.results;
-    },
-    timer() {
+    questionTimeStamp() {
       let interval = setInterval(() => {
-        this.currentQuestionTimer--;
+        this.currentQuestionTimeStamp--;
       }, 1000);
+    },
+    questionData(){
+        if(this.ApiData[this.currentQuestionIndex].type === "multiple"){
+
+        }      
+
+        let incorrectAnswers = this.ApiData[this.currentQuestionIndex].incorrect_answers;
+        let rightAnswer = this.ApiData[this.currentQuestionIndex].correct_answer;
+
+        let allPossibleAnswers = incorrectAnswers.concat(rightAnswer);
+        console.log(allPossibleAnswers);
+
+        let shuffledAnswers = this.shuffleArray(allPossibleAnswers);
+        console.log(shuffledAnswers); 
+
+        return{
+            type: this.ApiData[this.currentQuestionIndex].type,
+            category: this.ApiData[this.currentQuestionIndex].category,
+            difficulty: this.ApiData[this.currentQuestionIndex].difficulty,
+            question: this.ApiData[this.currentQuestionIndex].question,
+            answers: shuffledAnswers,
+            correctAnswer: rightAnswer,
+        }
+    },
+    shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+        return array;
     },
     decodeEntities(text) {
       const el = document.createElement('textarea');
@@ -36,34 +50,37 @@ export default {
       return el.value;
     },
   },
+  props:{
+    ApiData: {
+      type: Object,
+      required: true
+    },
+  },
 };
 </script>
 
 <template>
     <div class="trivia-container">
-        <div id="question-container">
-            <div id="current-question-and-timer">
-                <div id="current-question">
+        <div id="current-question-container">
+            <div id="question-index-and-time-stamp-container">
+                <div id="question-index-container">
                     <IconHelpCircle/>
-                    <h3>0/10</h3>
+                    <h3>{{ currentQuestionIndex + 1}}/10</h3>
                 </div>
-                <div id="timer">
-                    <h1 v-if="currentQuestionTimer>0">{{ currentQuestionTimer }}</h1>
+                <div id="time-stamp-container">
+                    <h1 v-if="currentQuestionTimeStamp>0">{{ currentQuestionTimeStamp }}</h1>
                     <v-progress-circular model-value="20" :size="50" :width="5"></v-progress-circular>
                 </div>
             </div>
-            <div id="current-question-theme">
-                <h3>Technology</h3>
+            <div id="category-container">
+                <h3>{{ questionData().category }}</h3>
             </div>
-            <div id="current-question-text">
-                <h1>{{decodeEntities(myData) }}</h1>
+            <div id="question-container">
+                <h1>{{ decodeEntities(questionData().question) }}</h1>
             </div>
         </div>
         <div id="answers-container">
-            <button id="answer-button-1">1. Germany</button>
-            <button id="answer-button-1">2. United States</button>
-            <button id="answer-button-1">3. Sweden</button>
-            <button id="answer-button-1">4. Finland</button>
+            <button v-for="(answer, index) in questionData().answers" :key="index">{{ answer }}</button> <!-- entender depois isso, naõ entendi muito bem -->
         </div>
     </div>
 </template>
@@ -95,44 +112,35 @@ export default {
 
 
 
-#question-container{
+#current-question-container{
     margin-bottom: 30px;
 }
 
-#current-question-and-timer{
+#question-index-and-time-stamp-container{
     position: relative;
     
 }
 
-#current-question{ 
+#question-index-container{ 
     display: flex;
     position: absolute;
     float: left;
     top: 16.5%;
     left: 1rem;
 }
-#current-question > h3{ 
+#question-index-container > h3{ 
     margin-left: 8px;
 }
 
-#timer{
+#time-stamp-container{
     display: inline-block;
 }
-#timer > h1{
+#time-stamp-container > h1{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
-
-
-#question-container> div{
-
-}
-
-
-
 
 
 

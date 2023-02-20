@@ -5,10 +5,7 @@ import TriviaAPI from './components/TriviaAPI.vue'
 
 <template>
   <div class="Game">
-    <Trivia/>
-    <div>
-      <TriviaAPI/>
-    </div>
+    <TriviaAPI/>
   </div>
 </template>
 
