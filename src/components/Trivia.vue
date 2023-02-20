@@ -4,17 +4,17 @@ import IconHelpCircle from './icons/IconHelpCircle.vue'
 export default {
   data() {
     return {
-        currentQuestionIndex: 0,
-        currentQuestionTimeStamp: 5,
+        currentQuestionIndex: 0, //mudar para questionIndex
+        questionTimeStamp: 5,
     };
   },
   methods: {
-    questionTimeStamp() {
+    updateQuestionTimeStamp() { 
       let interval = setInterval(() => {
-        this.currentQuestionTimeStamp--;
+        this.questionTimeStamp--;
       }, 1000);
     },
-    questionData(){
+    question(){
         if(this.ApiData[this.currentQuestionIndex].type === "multiple"){
 
         }      
@@ -76,20 +76,20 @@ export default {
                     <h3>{{ currentQuestionIndex + 1}}/10</h3>
                 </div>
                 <div id="time-stamp-container">
-                    <h1 v-if="currentQuestionTimeStamp > 0">{{ }}</h1>
+                    <h1 v-if="questionTimeStamp > 0">{{ }}</h1>
                     <h1 v-else>0</h1>
                     <v-progress-circular model-value="20" :size="50" :width="5"></v-progress-circular>
                 </div>
             </div>
             <div id="category-container">
-                <h3>{{ questionData().category }}</h3>
+                <h3>{{ question().category }}</h3>
             </div>
             <div id="question-container">
-                <h1>{{ decodeEntities(questionData().question) }}</h1>
+                <h1>{{ decodeEntities(question().question) }}</h1>
             </div>
         </div>
         <div id="answers-container">
-            <button v-for="(answer, index) in questionData().answers" :key="index">{{ decodeEntities(answer) }}</button> <!-- entender depois isso, naõ entendi muito bem -->
+            <button v-for="(answer, index) in question().answers" :key="index">{{ decodeEntities(answer) }}</button> <!-- entender depois isso, naõ entendi muito bem -->
         </div>
     </div>
 </template>
