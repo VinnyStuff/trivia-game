@@ -49,6 +49,11 @@ export default {
       el.innerHTML = text;
       return el.value;
     },
+    test(){    
+        if (this.currentQuestionIndex < 9){
+            this.currentQuestionIndex++
+        }
+    }
   },
   props:{
     ApiData: {
@@ -56,11 +61,14 @@ export default {
       required: true
     },
   },
+  mounted(){
+
+  },
 };
 </script>
 
 <template>
-    <div class="trivia-container">
+    <div @click="test()" class="trivia-container">
         <div id="current-question-container">
             <div id="question-index-and-time-stamp-container">
                 <div id="question-index-container">
@@ -68,7 +76,8 @@ export default {
                     <h3>{{ currentQuestionIndex + 1}}/10</h3>
                 </div>
                 <div id="time-stamp-container">
-                    <h1 v-if="currentQuestionTimeStamp>0">{{ currentQuestionTimeStamp }}</h1>
+                    <h1 v-if="currentQuestionTimeStamp > 0">{{ }}</h1>
+                    <h1 v-else>0</h1>
                     <v-progress-circular model-value="20" :size="50" :width="5"></v-progress-circular>
                 </div>
             </div>
@@ -80,7 +89,7 @@ export default {
             </div>
         </div>
         <div id="answers-container">
-            <button v-for="(answer, index) in questionData().answers" :key="index">{{ answer }}</button> <!-- entender depois isso, naõ entendi muito bem -->
+            <button v-for="(answer, index) in questionData().answers" :key="index">{{ decodeEntities(answer) }}</button> <!-- entender depois isso, naõ entendi muito bem -->
         </div>
     </div>
 </template>
