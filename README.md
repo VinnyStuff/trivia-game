@@ -1,29 +1,36 @@
-# trivia-game
 
-This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+    [##### 10%                  ] 0.1
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+{{percent}}
 
-## Project Setup
 
-```sh
-npm install
-```
+       
 
-### Compile and Hot-Reload for Development
+{{barra
 
-```sh
-npm run dev
-```
 
-### Compile and Minify for Production
 
-```sh
-npm run build
-```
+
+
+ Voce respondeu {{n}} de 10
+
+
+
+
+
+ i=0 <=======
+ 
+ 
+ computed {
+ 
+ p i+1 / total // 0.1
+ x i+1
+  i+1 / total * 100 + "%"
+
+
+ p=0.1
+ x=1
+ p="10%"

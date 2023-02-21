@@ -6,7 +6,7 @@ export default {
     return {
         questionIndex: 0, //mudar para questionIndex
         questionTimeStamp: 5, //time for next question
-        currentShuffle: null,
+        answersShuffled: false,
     };
   },
   methods: {
@@ -20,10 +20,10 @@ export default {
         console.log(rightAnswer)
 
         let allPossibleAnswers = incorrectAnswers.concat(rightAnswer);
-        console.log(allPossibleAnswers);
+        //console.log(allPossibleAnswers);
 
         let shuffledAnswers = this.shuffleArray(allPossibleAnswers);
-        console.log(shuffledAnswers); 
+        //console.log(shuffledAnswers); 
 
         return{
             type: this.ApiData[this.questionIndex].type,
@@ -32,6 +32,13 @@ export default {
             question: this.ApiData[this.questionIndex].question,
             answers: shuffledAnswers,
             correctAnswer: rightAnswer,
+        }
+    },
+    QuestionAnswers(){
+        if (this.answersShuffled === false){
+            let answers = this.Question().answers;
+            
+            return answers;
         }
     },
     shuffleArray(array) {
@@ -46,10 +53,17 @@ export default {
       el.innerHTML = text;
       return el.value;
     },
-    test(){    
-        if (this.questionIndex < 9){
+    selectAnswer(){    
+        if (this.questionIndex < this.ApiData.length - 1){
             this.questionIndex++
         }
+    },
+    TimeStamp(){
+        setInterval(() => {
+            if(this.questionTimeStamp > 0){
+                this.questionTimeStamp--;
+            }
+        }, 1000);
     }
   },
   props:{
@@ -62,22 +76,20 @@ export default {
     countdown() {
       return this.questionTimeStamp > 0 ? this.questionTimeStamp : 0;
     },
-    shuffledAnswers() {
-        return this.shuffleArray(this.Question().answers)
-    }
   },
   created() {
-    setInterval(() => {
-        if(this.questionTimeStamp > 0){
-            this.questionTimeStamp--;
-        }
-    }, 1000);
+    this.TimeStamp()
   },
+  watch: {
+    questionIndex(newValue, oldValue){
+        console.log("QuestionIndex change")
+    }
+  }
 };
 </script>
 
 <template>
-    <div @click="test()" class="trivia-container">
+    <div class="trivia-container">
         <div id="current-question-container">
             <div id="question-index-and-time-stamp-container">
                 <div id="question-index-container">
@@ -97,7 +109,7 @@ export default {
             </div>
         </div>
         <div id="answers-container">
-            <button v-for="(answer, index) in shuffledAnswers" :key="index">{{ decodeEntities(answer) }}</button>
+            <button @click="selectAnswer()" v-for="(answer, index) in QuestionAnswers()" :key="index">{{ decodeEntities(answer) }}</button>
         </div>
     </div>
 </template>
