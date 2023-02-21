@@ -4,23 +4,20 @@ import IconHelpCircle from './icons/IconHelpCircle.vue'
 export default {
   data() {
     return {
-        currentQuestionIndex: 0, //mudar para questionIndex
-        questionTimeStamp: 5,
+        questionIndex: 0, //mudar para questionIndex
+        questionTimeStamp: 5, //time for next question
+        currentShuffle: null,
     };
   },
   methods: {
-    updateQuestionTimeStamp() { 
-      let interval = setInterval(() => {
-        this.questionTimeStamp--;
-      }, 1000);
-    },
-    question(){
-        if(this.ApiData[this.currentQuestionIndex].type === "multiple"){
+    Question(){
+        if(this.ApiData[this.questionIndex].type === "multiple"){
 
-        }      
+        }
 
-        let incorrectAnswers = this.ApiData[this.currentQuestionIndex].incorrect_answers;
-        let rightAnswer = this.ApiData[this.currentQuestionIndex].correct_answer;
+        let incorrectAnswers = this.ApiData[this.questionIndex].incorrect_answers;
+        let rightAnswer = this.ApiData[this.questionIndex].correct_answer;
+        console.log(rightAnswer)
 
         let allPossibleAnswers = incorrectAnswers.concat(rightAnswer);
         console.log(allPossibleAnswers);
@@ -29,10 +26,10 @@ export default {
         console.log(shuffledAnswers); 
 
         return{
-            type: this.ApiData[this.currentQuestionIndex].type,
-            category: this.ApiData[this.currentQuestionIndex].category,
-            difficulty: this.ApiData[this.currentQuestionIndex].difficulty,
-            question: this.ApiData[this.currentQuestionIndex].question,
+            type: this.ApiData[this.questionIndex].type,
+            category: this.ApiData[this.questionIndex].category,
+            difficulty: this.ApiData[this.questionIndex].difficulty,
+            question: this.ApiData[this.questionIndex].question,
             answers: shuffledAnswers,
             correctAnswer: rightAnswer,
         }
@@ -50,8 +47,8 @@ export default {
       return el.value;
     },
     test(){    
-        if (this.currentQuestionIndex < 9){
-            this.currentQuestionIndex++
+        if (this.questionIndex < 9){
+            this.questionIndex++
         }
     }
   },
@@ -61,8 +58,20 @@ export default {
       required: true
     },
   },
-  mounted(){
-
+  computed: {
+    countdown() {
+      return this.questionTimeStamp > 0 ? this.questionTimeStamp : 0;
+    },
+    shuffledAnswers() {
+        return this.shuffleArray(this.Question().answers)
+    }
+  },
+  created() {
+    setInterval(() => {
+        if(this.questionTimeStamp > 0){
+            this.questionTimeStamp--;
+        }
+    }, 1000);
   },
 };
 </script>
@@ -73,23 +82,22 @@ export default {
             <div id="question-index-and-time-stamp-container">
                 <div id="question-index-container">
                     <IconHelpCircle/>
-                    <h3>{{ currentQuestionIndex + 1}}/10</h3>
+                    <h3>{{ questionIndex + 1}}/10</h3>
                 </div>
                 <div id="time-stamp-container">
-                    <h1 v-if="questionTimeStamp > 0">{{ }}</h1>
-                    <h1 v-else>0</h1>
+                    <h1>{{ countdown }}</h1>
                     <v-progress-circular model-value="20" :size="50" :width="5"></v-progress-circular>
                 </div>
             </div>
             <div id="category-container">
-                <h3>{{ question().category }}</h3>
+                <h3>{{ Question().category }}</h3>
             </div>
             <div id="question-container">
-                <h1>{{ decodeEntities(question().question) }}</h1>
+                <h1>{{ decodeEntities(Question().question) }}</h1>
             </div>
         </div>
         <div id="answers-container">
-            <button v-for="(answer, index) in question().answers" :key="index">{{ decodeEntities(answer) }}</button> <!-- entender depois isso, naõ entendi muito bem -->
+            <button v-for="(answer, index) in shuffledAnswers" :key="index">{{ decodeEntities(answer) }}</button>
         </div>
     </div>
 </template>
