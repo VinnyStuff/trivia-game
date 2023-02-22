@@ -6,8 +6,10 @@ export default {
         category: String, 
         answers: Array, 
     },
-    mounted(){
-        console.log(this.answers);
+    methods:{
+        handleClick(index) {
+            console.log("Item clicado:", index);
+        }
     }
 };
 </script>
@@ -19,7 +21,7 @@ export default {
             <h3>{{ index }}</h3> 
         </div>
         <div id="time-stamp-container">
-            {{  }} 
+            <!-- countdown -->
         </div>
         <div id="question-container">
             <h1>{{ question }}</h1>
@@ -28,7 +30,8 @@ export default {
             <h3>{{ category }}</h3>
         </div>
         <div id="answers-container">
-            <button v-for="(answer, answersIndex) in answers" :key="answersIndex">{{ answers[answersIndex] }}</button> 
+           <button @click ="$emit('trivia-click', answersIndex)" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{ answers[answersIndex] }}</button>
+            <!-- <button @click ="handleClick(answersIndex)" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{ answers[answersIndex] }}</button> -->
         </div>
     </div>
 </template>
