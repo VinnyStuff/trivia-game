@@ -1,3 +1,7 @@
+<script setup>
+import Countdown from './Countdown.vue'
+</script>
+
 <script>
 export default {
     props: {
@@ -6,6 +10,7 @@ export default {
         category: String, 
         answers: Array, 
         totalCorrectAnswers: Number,
+        initialCountdownValue: Number,
     },
     methods:{
         handleClick(index) {
@@ -21,8 +26,8 @@ export default {
             <IconHelpCircle/>
             <h3>{{ index }}</h3> 
         </div>
-        <div id="time-stamp-container">
-            <!-- countdown -->
+        <div id="time-stamp-container" style="right: 50%;">
+            <Countdown :countdownValueStart="initialCountdownValue" @coutdownEnd="$emit('trivia-click', 'not answered')"/>
         </div>
         <div id="question-container">
             <h1>{{ question }}</h1>

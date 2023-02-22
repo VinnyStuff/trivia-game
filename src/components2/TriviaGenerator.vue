@@ -1,4 +1,4 @@
-<script setup>
+<script setup> //um bom nome para esse script tambem seria TriviaController
 import Trivia from './Trivia.vue'
 </script>
 
@@ -12,6 +12,7 @@ export default {
             questionsAnswers: [],
             correctAnswers: [],
             amoutCorrectAnswered: null,
+            countdownValueStart: 3,
         }
     },
     methods:{
@@ -49,7 +50,7 @@ export default {
         nextQuestion(answerIndex){
             if(this.questionIndex < this.questionData.length - 1){
                 //console.log(answerIndex);
-
+                
                 this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
                 this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
 
@@ -79,11 +80,11 @@ export default {
                         if(correctAnswersArray[i] === questionAnswersArray[i]){
                             //this.amoutCorrectAnswered++;
                             totalCorrectAnswers++;
-                            console.log(i + "está questão está certa");
+                            console.log("a " + i +"°" + " questão está correta.");
                         }
                     }
                     this.amoutCorrectAnswered = totalCorrectAnswers;
-                    console.log(totalCorrectAnswers+ " quantidade de questões que acertou");
+                    console.log( "Você acertou no total " + totalCorrectAnswers+ " perguntas.");
                 }
             }
         },
@@ -104,7 +105,9 @@ export default {
         :category="decodeEntities(questionData[questionIndex].category)"
         :answers="currentQuestionAnswers" 
         :totalCorrectAnswers="amoutCorrectAnswered"
+        :initialCountdownValue="countdownValueStart"
         @trivia-click="nextQuestion($event)" 
         />
+        <!-- answers have decodeEntities() when suffle the answers-->
     </div>
 </template>

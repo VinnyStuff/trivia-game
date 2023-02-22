@@ -1,6 +1,5 @@
 <script setup>
 import TriviaGenerator from './components2/TriviaGenerator.vue';
-import Countdown from './components2/Countdown.vue';
 </script>
 
 <script>
@@ -9,9 +8,6 @@ import Countdown from './components2/Countdown.vue';
 <template>
   <div class="Game">
     <TriviaGenerator/>
-    <div class="bla">
-      <Countdown/>
-    </div>
   </div>
 </template>
 
@@ -25,11 +21,6 @@ import Countdown from './components2/Countdown.vue';
   display: flex;
   justify-content: center;
   align-items: center; 
-}
-
-.bla{
-  position: absolute;
-  top: 10%;
 }
 
 </style>
