@@ -31,7 +31,6 @@ export default {
         </div>
         <div id="answers-container">
            <button @click ="$emit('trivia-click', answersIndex)" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{ answers[answersIndex] }}</button>
-            <!-- <button @click ="handleClick(answersIndex)" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{ answers[answersIndex] }}</button> -->
         </div>
     </div>
 </template>

@@ -10,6 +10,8 @@ export default {
             questionIndex: 0,
             currentQuestionAnswers: [],
             questionsAnswers: [],
+            correctAnswers: [],
+            AmoutCorrectAnswered: null,
         }
     },
     methods:{
@@ -46,13 +48,37 @@ export default {
         },
         nextQuestion(answerIndex){
             if(this.questionIndex < this.questionData.length - 1){
-                console.log(answerIndex);
+                //console.log(answerIndex);
+
+                this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
                 this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
-                console.log(this.questionsAnswers);
+
+                //console.log(this.questionsAnswers + "essa foi a alternativa escolhida");
+                //console.log(this.correctAnswers + "essa é a alternativa correta");
 
 
                 this.currentQuestionAnswers = this.shuffledAnswers(this.questionIndex + 1)
                 this.questionIndex++;
+            }
+            else if(this.questionIndex === this.questionData.length - 1){
+                this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
+                this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
+
+                if(this.AmoutCorrectAnswered === null){
+                    const correctAnswersArray = this.correctAnswers;
+                    const questionAnswersArray = this.questionsAnswers;
+                    //console.log(correctAnswersArray);
+                    //console.log(questionAnswersArray);
+
+                    for (let i = 0; i < this.questionData.length; i++) {
+                        console.log(i);
+                        if(correctAnswersArray[i] === questionAnswersArray[i]){
+                            this.AmoutCorrectAnswered++;
+                            //console.log(i + " está questão está certa");
+                        }
+                    }
+                    console.log(this.AmoutCorrectAnswered++);
+                }
             }
         },
     },
