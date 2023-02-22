@@ -5,6 +5,7 @@ export default {
         question: String, 
         category: String, 
         answers: Array, 
+        totalCorrectAnswers: Number,
     },
     methods:{
         handleClick(index) {
@@ -15,7 +16,7 @@ export default {
 </script>
 
 <template>
-    <div class="trivia-container">
+    <div v-if="totalCorrectAnswers === null" class="trivia-container">
         <div id="question-index-container"> 
             <IconHelpCircle/>
             <h3>{{ index }}</h3> 
@@ -33,6 +34,7 @@ export default {
            <button @click ="$emit('trivia-click', answersIndex)" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{ answers[answersIndex] }}</button>
         </div>
     </div>
+    <h1 v-else>você acertou {{ totalCorrectAnswers }}</h1>
 </template>
 
 

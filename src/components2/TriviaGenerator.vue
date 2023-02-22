@@ -11,7 +11,7 @@ export default {
             currentQuestionAnswers: [],
             questionsAnswers: [],
             correctAnswers: [],
-            AmoutCorrectAnswered: null,
+            amoutCorrectAnswered: null,
         }
     },
     methods:{
@@ -19,10 +19,10 @@ export default {
             let response = await fetch ('https://opentdb.com/api.php?amount=10');
             let data = await response.json();
             
-            //console.log(data.results)
+            console.log(data.results)
             return data.results;
         },
-        shuffledAnswers(index){
+        shuffleAnswers(index){
             if(this.questionData !== null){
                 const correctAnswer = this.questionData[index].correct_answer;
                 const incorrectAnswers = this.questionData[index].incorrect_answers;
@@ -53,38 +53,44 @@ export default {
                 this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
                 this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
 
+
                 //console.log(this.questionsAnswers + "essa foi a alternativa escolhida");
                 //console.log(this.correctAnswers + "essa é a alternativa correta");
 
 
-                this.currentQuestionAnswers = this.shuffledAnswers(this.questionIndex + 1)
+                this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex + 1)
                 this.questionIndex++;
             }
             else if(this.questionIndex === this.questionData.length - 1){
                 this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
                 this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
 
-                if(this.AmoutCorrectAnswered === null){
+                if(this.amoutCorrectAnswered === null){
                     const correctAnswersArray = this.correctAnswers;
                     const questionAnswersArray = this.questionsAnswers;
-                    //console.log(correctAnswersArray);
-                    //console.log(questionAnswersArray);
+
+                    console.log(correctAnswersArray);
+                    console.log(questionAnswersArray);
+
+                    let totalCorrectAnswers = 0;
 
                     for (let i = 0; i < this.questionData.length; i++) {
-                        console.log(i);
+                        //console.log(i);
                         if(correctAnswersArray[i] === questionAnswersArray[i]){
-                            this.AmoutCorrectAnswered++;
-                            //console.log(i + " está questão está certa");
+                            //this.amoutCorrectAnswered++;
+                            totalCorrectAnswers++;
+                            console.log(i + "está questão está certa");
                         }
                     }
-                    console.log(this.AmoutCorrectAnswered++);
+                    this.amoutCorrectAnswered = totalCorrectAnswers;
+                    console.log(totalCorrectAnswers+ " quantidade de questões que acertou");
                 }
             }
         },
     },
     async mounted(){
         this.questionData = await this.fetchData();
-        this.currentQuestionAnswers = this.shuffledAnswers(this.questionIndex);
+        this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
     },
 }
 </script>
@@ -97,6 +103,7 @@ export default {
         :question="decodeEntities(questionData[questionIndex].question)"
         :category="decodeEntities(questionData[questionIndex].category)"
         :answers="currentQuestionAnswers" 
+        :totalCorrectAnswers="amoutCorrectAnswered"
         @trivia-click="nextQuestion($event)" 
         />
     </div>

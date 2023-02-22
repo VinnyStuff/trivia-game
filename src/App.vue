@@ -1,5 +1,6 @@
 <script setup>
 import TriviaGenerator from './components2/TriviaGenerator.vue';
+import Countdown from './components2/Countdown.vue';
 </script>
 
 <script>
@@ -8,6 +9,9 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
 <template>
   <div class="Game">
     <TriviaGenerator/>
+    <div class="bla">
+      <Countdown/>
+    </div>
   </div>
 </template>
 
@@ -23,8 +27,9 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
   align-items: center; 
 }
 
-.Game > div{
-  /* position: absolute; */
+.bla{
+  position: absolute;
+  top: 10%;
 }
 
 </style>
