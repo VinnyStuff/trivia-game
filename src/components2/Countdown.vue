@@ -1,7 +1,7 @@
 <template>
     <h3>{{ countdownCurrentValue }}</h3>
     <!-- <h3>{{ countdownValue }}</h3> -->
-    <v-progress-circular model-value="progressBarValue" :size="50" :width="5"></v-progress-circular>
+    <v-progress-circular :model-value="currentProgressBarValue" :size="50" :width="5"></v-progress-circular>
 </template>
   
 <script>
@@ -16,7 +16,7 @@ export default {
             interval: null, //this number will subtract the -countdownCurrentValue- per second
             fps: 60,
 
-            progressBarValue: 100,
+            currentProgressBarValue: null, 
         };
     },
 
@@ -38,9 +38,12 @@ export default {
             const elapsed = this.countdownValueStart - (currentTime - this.startTimeInClientMachine);
 
             this.countdownCurrentValue = elapsed;
+
             //console.log(elapsed);
-            
-            //
+
+            this.currentProgressBarValue = 100; //100 is when progress bar is full load
+            this.currentProgressBarValue = this.progressBarUnloading(); //change the progress bar increase
+            console.log(this.currentProgressBarValue);
 
             if (elapsed <= 0) {
                 this.countdownCurrentValue = 0;
@@ -51,6 +54,9 @@ export default {
                 this.startCountdown();
             }
             //console.log(this.countdownValue.toFixed());
+        },
+        progressBarUnloading(){
+            return this.currentProgressBarValue = (100 / this.countdownValueStart) * (this.countdownCurrentValue);
         },
     },
 
