@@ -12,7 +12,8 @@ export default {
             questionsAnswers: [],
             correctAnswers: [],
             amoutCorrectAnswered: null,
-            countdownValueStart: 3,
+            amoutNotAnswered: null,
+            countdownValueStart: 30,
         }
     },
     methods:{
@@ -50,9 +51,15 @@ export default {
         nextQuestion(answerIndex){
             if(this.questionIndex < this.questionData.length - 1){
                 //console.log(answerIndex);
-                
+
+                if(typeof answerIndex === 'number'){
+                    this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
+                }
+                else if(typeof answerIndex === 'string'){
+                    this.questionsAnswers.push(answerIndex);
+                }
+
                 this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
-                this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
 
 
                 //console.log(this.questionsAnswers + "essa foi a alternativa escolhida");
@@ -63,8 +70,15 @@ export default {
                 this.questionIndex++;
             }
             else if(this.questionIndex === this.questionData.length - 1){
+
+                if(typeof answerIndex === 'number'){
+                    this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
+                }
+                else if(typeof answerIndex === 'string'){
+                    this.questionsAnswers.push(answerIndex);
+                }
+
                 this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
-                this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
 
                 if(this.amoutCorrectAnswered === null){
                     const correctAnswersArray = this.correctAnswers;
@@ -74,17 +88,25 @@ export default {
                     console.log(questionAnswersArray);
 
                     let totalCorrectAnswers = 0;
+                    let totalNotAnswered = 0;
 
                     for (let i = 0; i < this.questionData.length; i++) {
                         //console.log(i);
-                        if(correctAnswersArray[i] === questionAnswersArray[i]){
+                        if(questionAnswersArray[i] === correctAnswersArray[i]){
                             //this.amoutCorrectAnswered++;
                             totalCorrectAnswers++;
                             console.log("a " + i +"°" + " questão está correta.");
                         }
+                        else if(questionAnswersArray[i] === 'this question is not answered'){
+                            totalNotAnswered++;
+                            console.log("você não respondeu a questão " + i);
+                        }
                     }
                     this.amoutCorrectAnswered = totalCorrectAnswers;
+                    this.amoutNotAnswered = totalNotAnswered;
+                    
                     console.log( "Você acertou no total " + totalCorrectAnswers+ " perguntas.");
+                    console.log("você não respondeu " + totalNotAnswered + " questões");
                 }
             }
         },
@@ -105,6 +127,7 @@ export default {
         :category="decodeEntities(questionData[questionIndex].category)"
         :answers="currentQuestionAnswers" 
         :totalCorrectAnswers="amoutCorrectAnswered"
+        :totalNotAnswered="amoutNotAnswered"
         :initialCountdownValue="countdownValueStart"
         @trivia-click="nextQuestion($event)" 
         />

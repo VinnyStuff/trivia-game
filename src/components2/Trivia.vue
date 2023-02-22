@@ -10,7 +10,9 @@ export default {
         category: String, 
         answers: Array, 
         totalCorrectAnswers: Number,
+        totalNotAnswered: Number,
         initialCountdownValue: Number,
+
     },
     methods:{
         handleClick(index) {
@@ -27,7 +29,7 @@ export default {
             <h3>{{ index }}</h3> 
         </div>
         <div id="time-stamp-container" style="right: 50%;">
-            <Countdown :countdownValueStart="initialCountdownValue" @coutdownEnd="$emit('trivia-click', 'not answered')"/>
+            <Countdown :countdownValueStart="initialCountdownValue" @coutdownEnd="$emit('trivia-click', 'this question is not answered')"/>
         </div>
         <div id="question-container">
             <h1>{{ question }}</h1>
@@ -39,7 +41,10 @@ export default {
            <button @click ="$emit('trivia-click', answersIndex)" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{ answers[answersIndex] }}</button>
         </div>
     </div>
-    <h1 v-else>você acertou {{ totalCorrectAnswers }}</h1>
+    <div v-else>
+        <h1>você acertou {{ totalCorrectAnswers }}</h1>
+        <h1>você não respondeu {{ totalNotAnswered }} perguntas</h1>
+    </div>
 </template>
 
 
