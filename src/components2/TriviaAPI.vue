@@ -1,10 +1,10 @@
 <script>
-import ApiData  from './Trivia.vue'
-
 export default {
     data(){
         return{
-            myData: null,
+            questionData: null,
+            index: this.questionIndex, 
+            question: null,
         }
     },
     methods:{
@@ -14,13 +14,22 @@ export default {
 
             return data.results;
         },
+        Question(){
+            this.question = this.questionData[this.index].question
+        }
     },
     async mounted(){
-        this.myData = await this.fetchData();
+        this.questionData = await this.fetchData();
+        this.Question();
     },
-    components:{
-        ApiData,
+
+
+
+    props:{
+        questionIndex: Number,
+        category: String,
     }
+
  }
 
 
@@ -28,8 +37,6 @@ export default {
 
 <template>
     <div>
-        <api-data v-if="myData" :ApiData="myData" :key="myData"></api-data>
-        bla
+        
     </div>
 </template>
-

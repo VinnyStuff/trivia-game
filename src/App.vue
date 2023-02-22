@@ -1,11 +1,13 @@
 <script setup>
-import Trivia from './components/Trivia.vue'
-import TriviaAPI from './components/TriviaAPI.vue'
+import TriviaGenerator from './components2/TriviaGenerator.vue';
+</script>
+
+<script>
 </script>
 
 <template>
   <div class="Game">
-    <TriviaAPI/>
+    <TriviaGenerator/>
   </div>
 </template>
 
@@ -22,7 +24,7 @@ import TriviaAPI from './components/TriviaAPI.vue'
 }
 
 .Game > div{
-  position: absolute;
+  /* position: absolute; */
 }
 
 </style>
