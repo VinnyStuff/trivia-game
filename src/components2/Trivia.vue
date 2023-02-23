@@ -25,7 +25,7 @@ export default {
             <h3>{{ index + 1}}/{{ amountQuestions }}</h3> 
         </div>
         <div id="time-stamp-container" style="right: 50%;">
-            <Countdown :amountQuestions="amountQuestions" :countdownValueStart="initialCountdownValue" :currentQuestionIndex="index" @coutdownEnd="$emit('trivia-click', 'this question is not answered')" />
+            <Countdown :countdownValueStart="initialCountdownValue" :currentQuestionIndex="index" @coutdownEnd="$emit('trivia-click', 'this question is not answered')" />
         </div>
         <div id="question-container">
             <h1>{{ question }}</h1>

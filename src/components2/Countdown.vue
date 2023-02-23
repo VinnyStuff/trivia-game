@@ -1,8 +1,11 @@
 <template>
-    <div v-if="progressBarworking">
-        <h3>{{ countdownValue }}</h3> <!-- ver dps o fixed ou trunc -->
-    <!-- <h3>{{ countdownValue }}</h3> -->
-    <v-progress-circular :model-value="progressBarProgress" :size="50" :width="5"></v-progress-circular>
+    <div class="coutdown" v-if="progressBarworking">
+        <div>
+            <h3>{{ countdownValue }}</h3> 
+        </div>
+        <div>
+            <v-progress-circular :model-value="progressBarProgress" :size="50" :width="5"></v-progress-circular>
+        </div>
     </div>
 </template>
   
@@ -83,7 +86,7 @@ export default {
 
     computed: {
         countdownValue(){
-            return this.countdownCurrentValue; // resolver essse problema do toFixed
+            return this.countdownCurrentValue.toFixed(2);
         },
         progressBarProgress(){
             return Math.trunc(this.currentProgressBarValue);
@@ -91,3 +94,7 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+
+</style>
