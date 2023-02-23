@@ -1,13 +1,16 @@
 <template>
-    <h3>{{ countdownCurrentValue }}</h3>
+    <div v-if="progressBarworking">
+        <h3>{{ countdownValue }}</h3> <!-- ver dps o fixed ou trunc -->
     <!-- <h3>{{ countdownValue }}</h3> -->
-    <v-progress-circular :model-value="currentProgressBarValue" :size="50" :width="5"></v-progress-circular>
+    <v-progress-circular :model-value="progressBarProgress" :size="50" :width="5"></v-progress-circular>
+    </div>
 </template>
   
 <script>
 export default {
     props: {
         countdownValueStart: Number,
+        currentQuestionIndex: Number,
     },
     data() {
         return {
@@ -17,53 +20,74 @@ export default {
             fps: 60,
 
             currentProgressBarValue: null, 
+            progressBarworking: false,
         };
     },
 
     mounted() { 
         this.startCountdown();
+        this.checkIfTheCurrentQuestionChanges();
     },
 
     methods: {
+        checkIfTheCurrentQuestionChanges(){
+            this.$watch('currentQuestionIndex', (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    if(this.countdownCurrentValue >= 0){
+                        this.progressBarworking = false;
+
+                        clearInterval(this.interval);
+                        this.startCountdown();
+                    }
+                }
+            })
+        },
+
         startCountdown(){
             if(this.countdownValueStart !== undefined){
-                this.startTimeInClientMachine = new Date().getTime() / 1000;
+                this.startTimeInClientMachine = (new Date().getTime() / 1000);
 
                 this.interval = setInterval(() => this.countdown(), 1000 / this.fps);
             }
         },
         countdown(){
-            const currentTime = new Date().getTime() / 1000;
+            if(this.countdownCurrentValue >= 0){
+                const currentTime = new Date().getTime() / 1000;
+                const elapsed = this.countdownValueStart - (currentTime - this.startTimeInClientMachine);
+                this.countdownCurrentValue = elapsed;
 
-            const elapsed = this.countdownValueStart - (currentTime - this.startTimeInClientMachine);
-
-            this.countdownCurrentValue = elapsed;
-
-            //console.log(elapsed);
-
-            this.currentProgressBarValue = 100; //100 is when progress bar is full load
-            this.currentProgressBarValue = this.progressBarUnloading(); //change the progress bar increase
-            console.log(this.currentProgressBarValue);
-
-            if (elapsed <= 0) {
+                this.currentProgressBarValue = 100; //100 is when progress bar is full load
+                this.currentProgressBarValue = this.progressBarUnloading(); //change the progress bar increase
+                this.progressBarworking = true;
+                //vai precisar de um if aqui para arrumar o relogio quando responde alguma pergunta
+            }
+            else{
                 this.countdownCurrentValue = 0;
-                clearInterval(this.interval);
                 this.$emit('coutdownEnd');
+                clearInterval(this.interval);
 
                 //start coutdown again
+                this.progressBarworking = false;
                 this.startCountdown();
             }
-            //console.log(this.countdownValue.toFixed());
         },
+
+
         progressBarUnloading(){
             return this.currentProgressBarValue = (100 / this.countdownValueStart) * (this.countdownCurrentValue);
         },
+    },
+    beforeUnmount() {
+        clearInterval(this.interval);
     },
 
     computed: {
         countdownValue(){
             return this.countdownCurrentValue; // resolver essse problema do toFixed
+        },
+        progressBarProgress(){
+            return Math.trunc(this.currentProgressBarValue);
         }
-    }
+    },
 };
 </script>

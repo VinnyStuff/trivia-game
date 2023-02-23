@@ -7,29 +7,25 @@ export default {
     props: {
         index: Number,
         question: String, 
+        amountQuestions: Number,
         category: String, 
         answers: Array, 
         totalCorrectAnswers: Number,
         totalNotAnswered: Number,
         initialCountdownValue: Number,
-
+        gameEnds: Boolean,
     },
-    methods:{
-        handleClick(index) {
-            console.log("Item clicado:", index);
-        }
-    }
 };
 </script>
 
 <template>
-    <div v-if="totalCorrectAnswers === null" class="trivia-container">
+    <div v-if="gameEnds == false"  class="trivia-container">
         <div id="question-index-container"> 
             <IconHelpCircle/>
-            <h3>{{ index }}</h3> 
+            <h3>{{ index + 1}}/{{ amountQuestions }}</h3> 
         </div>
         <div id="time-stamp-container" style="right: 50%;">
-            <Countdown :countdownValueStart="initialCountdownValue" @coutdownEnd="$emit('trivia-click', 'this question is not answered')"/>
+            <Countdown :amountQuestions="amountQuestions" :countdownValueStart="initialCountdownValue" :currentQuestionIndex="index" @coutdownEnd="$emit('trivia-click', 'this question is not answered')" />
         </div>
         <div id="question-container">
             <h1>{{ question }}</h1>
@@ -42,7 +38,7 @@ export default {
         </div>
     </div>
     <div v-else>
-        <h1>você acertou {{ totalCorrectAnswers }}</h1>
+        <h1>você acertou {{ totalCorrectAnswers }} perguntas</h1>
         <h1>você não respondeu {{ totalNotAnswered }} perguntas</h1>
     </div>
 </template>

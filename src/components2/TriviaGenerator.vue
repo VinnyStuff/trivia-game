@@ -6,14 +6,15 @@ import Trivia from './Trivia.vue'
 export default {
     data(){
         return{
-            questionData: null,
-            questionIndex: 0,
-            currentQuestionAnswers: [],
-            questionsAnswers: [],
-            correctAnswers: [],
-            amoutCorrectAnswered: null,
-            amoutNotAnswered: null,
-            countdownValueStart: 30,
+            questionData: null, //question all informations
+            questionIndex: 0, //current question
+            currentQuestionAnswers: [], //current answers in current questions 
+            questionsAnswered: [], //array of all chosen answers
+            correctAnswers: [], // array of correct answers
+            amoutCorrectAnswered: null, // number of questions correct
+            amoutNotAnswered: null, // number of questions not answered
+            countdownValueStart: 10, //animation looks good with values >= 10
+            gameEnds: false, //when game ends
         }
     },
     methods:{
@@ -23,6 +24,12 @@ export default {
             
             console.log(data.results)
             return data.results;
+        },
+        async getApiData(){
+            this.questionData = await this.fetchData();
+            this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
+
+            
         },
         shuffleAnswers(index){
             if(this.questionData !== null){
@@ -53,16 +60,16 @@ export default {
                 //console.log(answerIndex);
 
                 if(typeof answerIndex === 'number'){
-                    this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
+                    this.questionsAnswered.push(this.currentQuestionAnswers[answerIndex]);
                 }
-                else if(typeof answerIndex === 'string'){
-                    this.questionsAnswers.push(answerIndex);
+                else if(typeof answerIndex === 'string'){ //if not answered
+                    this.questionsAnswered.push(answerIndex);
                 }
 
                 this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
 
 
-                //console.log(this.questionsAnswers + "essa foi a alternativa escolhida");
+                //console.log(this.questionsAnswered + "essa foi a alternativa escolhida");
                 //console.log(this.correctAnswers + "essa é a alternativa correta");
 
 
@@ -72,17 +79,17 @@ export default {
             else if(this.questionIndex === this.questionData.length - 1){
 
                 if(typeof answerIndex === 'number'){
-                    this.questionsAnswers.push(this.currentQuestionAnswers[answerIndex]);
+                    this.questionsAnswered.push(this.currentQuestionAnswers[answerIndex]);
                 }
-                else if(typeof answerIndex === 'string'){
-                    this.questionsAnswers.push(answerIndex);
+                else if(typeof answerIndex === 'string'){ //if not answered
+                    this.questionsAnswered.push(answerIndex);
                 }
 
                 this.correctAnswers.push(this.questionData[this.questionIndex].correct_answer);
 
-                if(this.amoutCorrectAnswered === null){
+                if(this.gameEnds === false){
                     const correctAnswersArray = this.correctAnswers;
-                    const questionAnswersArray = this.questionsAnswers;
+                    const questionAnswersArray = this.questionsAnswered;
 
                     console.log(correctAnswersArray);
                     console.log(questionAnswersArray);
@@ -104,6 +111,7 @@ export default {
                     }
                     this.amoutCorrectAnswered = totalCorrectAnswers;
                     this.amoutNotAnswered = totalNotAnswered;
+                    this.gameEnds = true;
                     
                     console.log( "Você acertou no total " + totalCorrectAnswers+ " perguntas.");
                     console.log("você não respondeu " + totalNotAnswered + " questões");
@@ -112,8 +120,7 @@ export default {
         },
     },
     async mounted(){
-        this.questionData = await this.fetchData();
-        this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
+        this.getApiData();
     },
 }
 </script>
@@ -122,13 +129,15 @@ export default {
     <div>
         <Trivia
         v-if="questionData !== null"
-        :index="questionIndex + 1"
+        :index="questionIndex"
         :question="decodeEntities(questionData[questionIndex].question)"
+        :amountQuestions="questionData.length"
         :category="decodeEntities(questionData[questionIndex].category)"
         :answers="currentQuestionAnswers" 
         :totalCorrectAnswers="amoutCorrectAnswered"
         :totalNotAnswered="amoutNotAnswered"
         :initialCountdownValue="countdownValueStart"
+        :gameEnds="gameEnds"
         @trivia-click="nextQuestion($event)" 
         />
         <!-- answers have decodeEntities() when suffle the answers-->
