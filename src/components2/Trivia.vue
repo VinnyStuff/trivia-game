@@ -20,6 +20,7 @@ export default {
     data() {
         return {
             isAnimating: false,
+            options: ['A', 'B', 'C' , 'D'],
         };
     },
     methods: {
@@ -43,7 +44,7 @@ export default {
             <h3>{{ index + 1}}/{{ amountQuestions }}</h3> 
         </div>
         <div id="time-stamp-container" style="right: 50%;">
-           <Countdown :progressBarColor="'rgba(142, 98, 193, 0.8)'" :countdownValueStart="initialCountdownValue" :currentQuestionIndex="index" @coutdownEnd="$emit('trivia-click', 'this question is not answered')" />
+           <Countdown :progressBarColor="'rgba(142, 98, 193, 0.8)'" :countdownValueStart="initialCountdownValue" :currentQuestionIndex="index" @coutdownEnd="$emit('trivia-click', 'this question is not answered'), slideInAnimation()" />
         </div>
         <div id="question-container">
             <h1>{{ question }}</h1>
@@ -52,7 +53,7 @@ export default {
             <h3>{{ category }}</h3>
         </div>
         <div id="answers-container">
-           <button @click ="$emit('trivia-click', answersIndex), slideInAnimation()" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{answersIndex + 1}}. {{answers[answersIndex]}}</button>
+           <button @click ="$emit('trivia-click', answersIndex), slideInAnimation()" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{options[answersIndex]}}) {{answers[answersIndex]}}</button>
         </div>
     </div>
     <div v-else>
@@ -64,18 +65,13 @@ export default {
 
 <style scoped>
 .trivia-container{
-    max-width: 700px;
-    min-height: 900px;
     border-radius: 30px;
     background-color: white;
     -webkit-box-shadow: 0px 10px 22px 1px rgba(0,0,0,0.17);
     -moz-box-shadow: 0px 10px 22px 1px rgba(0,0,0,0.17);
     box-shadow: 0px 10px 22px 1px rgba(0,0,0,0.11);
     position: relative;
-    margin: 0px 30px;
     padding: 50px;
-
-
 }
 
 #question-index-container{
@@ -95,8 +91,14 @@ export default {
     margin-top: -25px;
     margin-bottom: 10px;
 }
+
 #time-stamp-container > div{
     margin: 0 auto;
+    transition: 300ms ease;
+}
+#time-stamp-container > div:hover{
+    transform: scale(1.4);
+    transition: 300ms ease;
 }
 
 #question-container{
@@ -134,19 +136,15 @@ export default {
     color: white;
     font-weight: 600;
 
-    transition: 250ms ease;
+    transition: 300ms ease;
 }
-
 #answers-container >  button:hover{
-    /* transition: scale(2); */
     transform: scale(1.05);
     transition: 100ms ease;
 }
 #answers-container >  button:active{
-    /* transition: scale(2); */
     transform: scale(0.98);
 }
-
 
 
 @media only screen and (max-width: 700px) {
@@ -164,7 +162,6 @@ export default {
          padding: clamp(30px, 6.8vw, 50px) clamp(30px, 6.8vw, 50px); 
     }
 }
-
 @media only screen and (max-width: 360px) {
     #time-stamp-container{
         margin-left: 75%;

@@ -7,7 +7,7 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
 
 <template>
   <div class="Game">
-    <TriviaGenerator/>
+    <TriviaGenerator class="myTriviaGenerator"/>
   </div>
 </template>
 
@@ -23,4 +23,12 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
   align-items: center; 
 }
 
+.myTriviaGenerator{
+  margin: 0px 30px;
+  max-width: 700px;
+  min-height: 900px;
+}
+@media only screen and (max-width: 360px) {
+  
+}
 </style>
