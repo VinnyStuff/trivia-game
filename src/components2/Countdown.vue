@@ -1,11 +1,7 @@
 <template>
-    <div class="coutdown" v-if="progressBarworking">
-        <div>
-            <h3>{{ countdownValue }}</h3> 
-        </div>
-        <div>
-            <v-progress-circular :model-value="progressBarProgress" :size="50" :width="5"></v-progress-circular>
-        </div>
+    <div class="countdown" v-if="progressBarworking" :style="{ width: progressBar.size +'px' }">
+        <h3 :style="{ fontSize: progressBar.fontSize + 'px' }">{{ countdownValue }}</h3> 
+        <v-progress-circular :color="progressBarColor" :model-value="progressBarProgress" :size="progressBar.size" :width="progressBar.width"></v-progress-circular>
     </div>
 </template>
   
@@ -14,6 +10,7 @@ export default {
     props: {
         countdownValueStart: Number,
         currentQuestionIndex: Number,
+        progressBarColor: String,
     },
     data() {
         return {
@@ -86,10 +83,19 @@ export default {
 
     computed: {
         countdownValue(){
-            return this.countdownCurrentValue.toFixed(2);
+            //return this.countdownCurrentValue.toFixed(0);
+            return Math.trunc(this.countdownCurrentValue); //if values be a int
         },
         progressBarProgress(){
             return Math.trunc(this.currentProgressBarValue);
+        },
+        progressBar(){
+            let currentSize = 60;
+            return {
+                size: currentSize,
+                width: currentSize * 0.10,
+                fontSize: currentSize / 2.2
+            }
         }
     },
 };
@@ -97,4 +103,20 @@ export default {
 
 <style scoped>
 
+.countdown{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+h3{
+    position: absolute;
+    font-weight: 500;
+    margin-top: 3px;
+}
+.v-progress-circular{
+    
+}
 </style>

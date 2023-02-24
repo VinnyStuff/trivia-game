@@ -13,7 +13,7 @@ export default {
             correctAnswers: [], // array of correct answers
             amoutCorrectAnswered: null, // number of questions correct
             amoutNotAnswered: null, // number of questions not answered
-            countdownValueStart: 10, //animation looks good with values >= 10
+            countdownValueStart: 30, //animation looks good with values >= 10
             gameEnds: false, //when game ends
         }
     },

@@ -16,7 +16,7 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
 .Game{
   width: 100vw;
   height: 100vh;
-  background-color: #F6F5F5; 
+  background-color: #d9d9d9; 
 
   display: flex;
   justify-content: center;
