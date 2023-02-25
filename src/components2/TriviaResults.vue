@@ -8,18 +8,27 @@
             </div>
             <p>{{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
 
-            <div class="chevron-down-button" @click="">
-                <ChevronDown/>
-            </div>
             <div class="questions-answers">
-                <div v-for="(currentQuestionsAnswers, answersIndex) in allQuestionsAnswers[questionsIndex]" :key="questionsIndex">
-                    <div>
-                        <p>{{ allQuestionsAnswers[questionsIndex][answersIndex] }}</p>
-                    </div>
-                </div>
+                <v-row>
+                    <v-col>
+                        <v-menu>
+                            <template v-slot:activator="{ props }">
+                            <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
+                            </template>
+
+                            <v-list>
+                            <v-list-item
+                                v-for="(currentQuestionsAnswers, answersIndex) in allQuestionsAnswers[questionsIndex]" :key="questionsIndex">
+                                <v-list-item-title>{{ allQuestionsAnswers[questionsIndex][answersIndex]  }}</v-list-item-title>
+                            </v-list-item>
+                            </v-list>
+                        </v-menu>
+                    </v-col>
+                </v-row>
             </div> 
         </div>
     </div>
+   
 </template>
   
 <script setup>
@@ -31,11 +40,6 @@ import ChevronDown from '../components/icons/ChevronDown.vue'
 
 <script>
 export default {
-    data(){
-        return{
-            showQuestionsAnswers: false,
-        }
-    },
     props:{
         questionsObject: Object,
         allQuestionsAnswers: Array,
@@ -193,27 +197,6 @@ export default {
 }
 
 .questions-answers{
-   /*  position: absolute; */
-    background-color: white;
-    width: 100%;
-
-    left: 0;
-    margin-top: 9.5%;
-    z-index: 9999;
-
-    -webkit-box-shadow: 0px 9px 18px -4px rgba(0,0,0,0.5); 
-    box-shadow: 0px 9px 18px -4px rgba(0,0,0,0.5);
-    border-radius: 20px;
+    
 }
-.questions-answers > p{
-    font-size: 18px;
-    text-align: justify;
-    margin: 0px 30px;
-    line-height: 22px;
-    color: #3A3A3A;
-}
-.questions-answers > div{
-    border: 2px solid red;
-}
-
 </style>
