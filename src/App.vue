@@ -25,10 +25,10 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
 
 .myTriviaGenerator{
   margin: 0px 30px;
-  max-width: 700px;
-  min-height: 900px;
 }
-@media only screen and (max-width: 360px) {
-  
+@media only screen and (max-width: 510px) {
+  .myTriviaGenerator{
+    margin: 0px 15px;
+  }
 }
 </style>

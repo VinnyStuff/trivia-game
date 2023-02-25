@@ -44,7 +44,7 @@ export default {
             <h3>{{ index + 1}}/{{ amountQuestions }}</h3> 
         </div>
         <div id="time-stamp-container" style="right: 50%;">
-           <Countdown :progressBarColor="'rgba(142, 98, 193, 0.8)'" :countdownValueStart="initialCountdownValue" :currentQuestionIndex="index" @coutdownEnd="$emit('trivia-click', 'this question is not answered'), slideInAnimation()" />
+           <Countdown :progressBarColor="'#FF5656'" :countdownValueStart="initialCountdownValue" :currentQuestionIndex="index" @coutdownEnd="$emit('trivia-click', 'this question is not answered'), slideInAnimation()" />
         </div>
         <div id="question-container">
             <h1>{{ question }}</h1>
@@ -65,13 +65,16 @@ export default {
 
 <style scoped>
 .trivia-container{
+    max-width: 700px;
+    min-height: 900px;
+
     border-radius: 30px;
     background-color: white;
-    -webkit-box-shadow: 0px 10px 22px 1px rgba(0,0,0,0.17);
-    -moz-box-shadow: 0px 10px 22px 1px rgba(0,0,0,0.17);
-    box-shadow: 0px 10px 22px 1px rgba(0,0,0,0.11);
     position: relative;
     padding: 50px;
+
+    -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
+    box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54);
 }
 
 #question-index-container{
@@ -112,7 +115,7 @@ export default {
 }
 
 #category-container{
-    background-color: rgba(142, 98, 193, 0.9);
+    background-color: #FF5656;
     width: max-content;
     text-align: center;
     margin: 0 auto;
@@ -122,10 +125,13 @@ export default {
 
     margin-bottom: 18px;
     font-size: 16px;
+
+    -webkit-box-shadow: inset 0px 6px 34px -7px rgba(0,0,0,0.25); 
+    box-shadow: inset 0px 6px 34px -7px rgba(0,0,0,0.25);
 }
 
 #answers-container >  button{
-    background-color: rgba(142, 98, 193, 1);
+    background-color: #EE2B47;
     width: 100%;
     border: none;
     margin: 6px 0px;
@@ -137,6 +143,9 @@ export default {
     font-weight: 600;
 
     transition: 300ms ease;
+
+    -webkit-box-shadow: inset 0px -13px 30px -7px rgba(0,0,0,0.25); 
+    box-shadow: inset 0px -13px 30px -7px rgba(0,0,0,0.25);
 }
 #answers-container >  button:hover{
     transform: scale(1.05);
@@ -152,10 +161,10 @@ export default {
         font-size: clamp(12px, 2.6vw, 18px);
     }
     #category-container{
-        font-size: clamp(14px, 2.3vw, 16px);
+        font-size: clamp(14px, 2.6vw, 16px);
     }
     #answers-container >  button{   
-        font-size: clamp(18px, 3.8vw, 20px)
+        font-size: clamp(16px,  2.6vw, 20px)
     }
 
     .trivia-container{
