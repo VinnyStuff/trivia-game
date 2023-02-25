@@ -11,8 +11,6 @@ export default {
         amountQuestions: Number,
         category: String, 
         answers: Array, 
-        totalCorrectAnswers: Number,
-        totalNotAnswered: Number,
         initialCountdownValue: Number,
         gameEnds: Boolean,
 
@@ -38,7 +36,7 @@ export default {
 </script>
 
 <template>
-    <div v-if="gameEnds == false"  class="trivia-container" :class="{ slideIn: isAnimating }">
+    <div class="trivia-container" :class="{ slideIn: isAnimating }">
         <div id="question-index-container"> 
             <IconHelpCircle/> 
             <h3>{{ index + 1}}/{{ amountQuestions }}</h3> 
@@ -56,25 +54,12 @@ export default {
            <button @click ="$emit('trivia-click', answersIndex), slideInAnimation()" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{options[answersIndex]}}) {{answers[answersIndex]}}</button>
         </div>
     </div>
-    <div v-else>
-        <h1>você acertou {{ totalCorrectAnswers }} perguntas</h1>
-        <h1>você não respondeu {{ totalNotAnswered }} perguntas</h1>
-    </div>
 </template>
 
 
 <style scoped>
 .trivia-container{
-    max-width: 700px;
-    min-height: 900px;
 
-    border-radius: 30px;
-    background-color: white;
-    position: relative;
-    padding: 50px;
-
-    -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
-    box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54);
 }
 
 #question-index-container{
