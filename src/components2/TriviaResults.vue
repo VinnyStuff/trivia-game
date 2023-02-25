@@ -1,11 +1,39 @@
 <template>
     <div class="trivia-results">
-        <div v-for="(questions, questionsIndex) in questionsObject" :key="questionsIndex"  :class="{ 'correct-answer': checkAnswer(questionsIndex) === 'correct', 'wrong-answer': checkAnswer(questionsIndex) === 'wrong', 'not-answered': checkAnswer(questionsIndex) === 'notAnswered'}">
-            <p>{{ questionsIndex + 1 }}) {{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
+        <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :key="questionsIndex" :class="{ 'correct-answer': checkAnswer(questionsIndex) === 'correct', 'wrong-answer': checkAnswer(questionsIndex) === 'wrong', 'not-answered': checkAnswer(questionsIndex) === 'notAnswered'}">
+            <div class="question-state" >
+                <Correct v-if="checkAnswer(questionsIndex) === 'correct'"/>
+                <NotAnswered v-else-if="checkAnswer(questionsIndex) === 'notAnswered'"/>
+                <Wrong v-else-if="checkAnswer(questionsIndex) === 'wrong'"/>
+            </div>
+            <p>{{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
+
+            <div class="dropdown-answers">
+                <v-menu transition="scale-transition">
+                    <template v-slot:activator="{ props }">
+                    <v-btn color="primary" v-bind="props">
+                    bla
+                    </v-btn>
+                    </template>
+                    <v-list>
+                    <v-list-item v-for="(questionsAnswers, questionsAnswersIndex) in allQuestionsAnswers" :key="questionsAnswersIndex">
+
+                    <v-list-item-title>{{ questionsAnswers[questionsAnswersIndex] }}</v-list-item-title>
+                    </v-list-item>
+                    </v-list>
+                </v-menu>
+            </div>
         </div>
-    </div >
+    </div>
+
 </template>
   
+<script setup>
+import Wrong from '../components/icons/Wrong.vue'
+import Correct from '../components/icons/Check.vue'
+import NotAnswered from '../components/icons/QuestionMark.vue'
+</script>
+
 <script>
 export default {
     props:{
@@ -37,31 +65,87 @@ export default {
 </script>
 
 <style scoped>
-
-.correct-answer{
-    background-color: green;
-}   
-.wrong-answer{
-    background-color: red;
-}
-.not-answered{
-    background-color: grey;
-}
-.trivia-results > div{
-    margin-bottom: 10px;
+.questions{
     width: 100%;
-    border: solid;
+    height: max-content;
     font-size: 20px;
     border-radius: 35px;
     font-weight: 600;
-    padding: 15px 10px;
-    padding-left: 50px;
+    border: 1.5px solid #D0D0D0;
+    /* figma */
+
+    /* Auto layout */
+    display: flex;
+    padding: 11px 12px;
+    border-radius: 20px;
+
+    position: relative;
+
+    margin-bottom: 12px;
 }
 
-.trivia-results > div > p{
+.question-state{
+    width: 22px;
+    height: 22px;
+
+    border: 2px solid black;
+    border-radius: 100px;
+
+    /* Inside auto layout */
+    flex: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.questions > p{
     font-size: 18px;
     text-align: justify;
+    margin: 0px 30px;
+    line-height: 22px;
+    color: #3A3A3A;
+}
+
+.question-state > svg{
+    margin-bottom: 3px;
+    height: 80%;
+    width: 80%;
+    border-radius: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
+.correct-answer{
+    background-color: #70C050;
+}
+.correct-answer > .question-state{
+    background-color: white;
+    border: 2px solid white;
+}
+.correct-answer > .question-state > svg{
+    fill: #70C050;
+}
+.correct-answer > .question-state > svg {
+  stroke: #70C050;
+  stroke-width: 2px;
+}
+.correct-answer > p{
+    color: white;
+}
+
+.wrong-answer > .question-state{
+    border: 2px solid #ED4956;
+}
+.wrong-answer > .question-state > svg{
+    fill: #ED4956;
+}
+
+.not-answered > .question-state{
+    border: 2px solid #8B8B8B;
+}
+.not-answered > .question-state > svg{
+    fill: #8B8B8B;
+}
 </style>

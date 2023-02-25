@@ -97,6 +97,7 @@ export default {
 
     margin-bottom: 12px;
     font-size: 18px;
+    line-height: 42px;
 }
 
 #category-container{
