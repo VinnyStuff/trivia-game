@@ -1,5 +1,7 @@
 <template>
     <div class="trivia-results">
+        <div>
+        </div>
         <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :key="questionsIndex" :class="{ 'correct-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'correct', 'wrong-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'wrong', 'not-answered': checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'}">
             <div class="question-state" >
                 <Correct v-if="checkIfQuestionsIsCorrect(questionsIndex) === 'correct'"/>
@@ -9,26 +11,10 @@
             <p>{{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
 
             <div class="questions-answers">
-                <v-row>
-                    <v-col>
-                        <v-menu>
-                            <template v-slot:activator="{ props }">
-                            <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
-                            </template>
 
-                            <v-list>
-                            <v-list-item
-                                v-for="(currentQuestionsAnswers, answersIndex) in allQuestionsAnswers[questionsIndex]" :key="questionsIndex">
-                                <v-list-item-title>{{ allQuestionsAnswers[questionsIndex][answersIndex]  }}</v-list-item-title>
-                            </v-list-item>
-                            </v-list>
-                        </v-menu>
-                    </v-col>
-                </v-row>
             </div> 
         </div>
     </div>
-   
 </template>
   
 <script setup>
@@ -197,6 +183,38 @@ export default {
 }
 
 .questions-answers{
-    
+    position: absolute;
+    right: 10%
+}
+
+.no-style{
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    text-align: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: none;
+    padding: 0;
+
+    position: absolute;
+    width: 20px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.chevronDown{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>

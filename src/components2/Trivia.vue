@@ -58,9 +58,6 @@ export default {
 
 
 <style scoped>
-.trivia-container{
-
-}
 
 #question-index-container{
     top: 50%;
@@ -154,7 +151,7 @@ export default {
     }
 
     .trivia-container{
-         padding: clamp(30px, 6.8vw, 50px) clamp(30px, 6.8vw, 50px); 
+         padding: 10.8vw; 
     }
 }
 @media only screen and (max-width: 360px) {

@@ -138,4 +138,9 @@ export default {
     -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
     box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54);
 }
+@media only screen and (max-width: 700px) {
+    .trivia-controller > div{
+        padding: 5vw;
+    }
+}
 </style>
