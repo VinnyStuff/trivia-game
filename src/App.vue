@@ -1,5 +1,5 @@
 <script setup>
-import TriviaGenerator from './components2/TriviaGenerator.vue';
+import TriviaController from './components2/TriviaController.vue';
 </script>
 
 <script>
@@ -7,7 +7,7 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
 
 <template>
   <div class="Game">
-    <TriviaGenerator class="myTriviaGenerator"/>
+    <TriviaController class="trivia-controller"/>
   </div>
 </template>
 
@@ -22,14 +22,5 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
   display: flex;
   justify-content: center;
   align-items: center; 
-}
-
-.myTriviaGenerator{
-  margin: 12px 30px;
-}
-@media only screen and (max-width: 510px) {
-  .myTriviaGenerator{
-    margin: 20px 15px;
-  }
 }
 </style>

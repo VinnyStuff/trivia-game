@@ -58,7 +58,6 @@ export default {
 
 
 <style scoped>
-
 #question-index-container{
     top: 50%;
     display: flex;

@@ -1,6 +1,6 @@
 <template>
     <div class="trivia-controller" v-if="questionData !== null">
-        <Trivia
+<!--    <Trivia
         v-if="gameEnds == false"
         :index="questionIndex"
         :question="decodeEntities(questionData[questionIndex].question)"
@@ -10,17 +10,19 @@
         :initialCountdownValue="countdownValueStart"
         :gameEnds="gameEnds"
         @trivia-click="nextQuestion($event)" 
-        />
+        /> -->
         <!-- answers have decodeEntities() when suffle the answers-->
         
-        <TriviaResults
-        v-else
+     <!--    <TriviaResults 
+        class="trivia-results" v-else
         :questionsObject="questionData"
         :allQuestionsAnswers="allAnswers"
         :correctAnswers="correctAnswers"
         :questionsAnswered="questionsAnswered"
         :questionsCategory="decodeEntities(questionData[questionIndex].category)"
-        />
+        /> -->
+
+        <MainMenu/>
     </div>
 </template>
 
@@ -28,6 +30,7 @@
 <script setup> //um bom nome para esse script tambem seria TriviaController
 import Trivia from './Trivia.vue'
 import TriviaResults from './TriviaResults.vue'
+import MainMenu from './MainMenu.vue'
 </script>
 
 <script>
@@ -129,19 +132,28 @@ export default {
 
 <style scoped>
 .trivia-controller > div{
-    max-width: 700px;
+    max-width: 650px;
     min-height: 900px;
+
     border-radius: 30px;
     background-color: white;
     position: relative;
     padding: 40px;
 
     -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
-    box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54);
+    box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
 }
 @media only screen and (max-width: 700px) {
     .trivia-controller > div{
-        padding: 5vw;
+        padding: 6vw;
     }
+}
+.trivia-controller{
+  margin: 12px 30px;
+}
+@media only screen and (max-width: 510px) {
+  .trivia-controller{
+    margin: 12px 15px;
+  }
 }
 </style>
