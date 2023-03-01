@@ -1,6 +1,7 @@
 <template>
     <div class="trivia-results">
-        <div>
+        <div class="questions-category">
+            <p>{{ questionsCategory }}</p>
         </div>
         <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :key="questionsIndex" :class="{ 'correct-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'correct', 'wrong-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'wrong', 'not-answered': checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'}">
             <div class="question-state" >
@@ -11,7 +12,7 @@
             <p>{{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
 
             <div class="questions-answers">
-
+                
             </div> 
         </div>
     </div>
@@ -31,6 +32,7 @@ export default {
         allQuestionsAnswers: Array,
         correctAnswers: Array,
         questionsAnswered: Array,
+        questionsCategory: String,
     },
     
     methods:{
@@ -55,7 +57,17 @@ export default {
 </script>
 
 <style scoped>
-.questions{
+p{
+    font-size: 18px;
+    text-align: justify;
+    margin: 0px 30px;
+    line-height: 22px;
+    color: #3A3A3A;
+}
+.questions-category > p{
+    margin: 0px 0px;
+}
+.questions , .questions-category{
     width: 100%;
     height: max-content;
     font-size: 20px;
@@ -73,6 +85,12 @@ export default {
 
     margin-bottom: 12px;
 }
+.questions-category{
+    width: max-content;
+    margin: 0 auto;
+    margin-bottom: 12px;
+    padding: 5px 20px;
+}
 
 .question-state{
     width: 22px;
@@ -86,13 +104,6 @@ export default {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-}
-.questions > p{
-    font-size: 18px;
-    text-align: justify;
-    margin: 0px 30px;
-    line-height: 22px;
-    color: #3A3A3A;
 }
 
 .question-state > svg{
@@ -183,38 +194,9 @@ export default {
 }
 
 .questions-answers{
-    position: absolute;
-    right: 10%
-}
 
-.no-style{
-    background-color: transparent;
-    border: none;
-    color: inherit;
-    font: inherit;
-    line-height: normal;
-    margin: 0;
-    overflow: visible;
-    padding: 0;
-    text-align: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    box-shadow: none;
-    padding: 0;
-
-    position: absolute;
-    width: 20px;
-    height: 100px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
-.chevronDown{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.questions-answers > p{
+
 }
 </style>

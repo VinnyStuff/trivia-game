@@ -15,8 +15,8 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
 
 .Game{
   width: 100vw;
-  min-height:  100vh;
-  max-height: max-content;
+  min-height: 100vh;
+  height: max-content;
   background-color: #d9d9d9; 
 
   display: flex;
@@ -25,7 +25,7 @@ import TriviaGenerator from './components2/TriviaGenerator.vue';
 }
 
 .myTriviaGenerator{
-  margin: 30px 30px;
+  margin: 12px 30px;
 }
 @media only screen and (max-width: 510px) {
   .myTriviaGenerator{

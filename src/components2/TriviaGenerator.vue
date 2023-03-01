@@ -19,6 +19,7 @@
         :allQuestionsAnswers="allAnswers"
         :correctAnswers="correctAnswers"
         :questionsAnswered="questionsAnswered"
+        :questionsCategory="decodeEntities(questionData[questionIndex].category)"
         />
     </div>
 </template>
@@ -133,7 +134,7 @@ export default {
     border-radius: 30px;
     background-color: white;
     position: relative;
-    padding: 50px;
+    padding: 40px;
 
     -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
     box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54);
