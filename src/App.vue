@@ -7,7 +7,7 @@ import TriviaController from './components2/TriviaController.vue';
 
 <template>
   <div class="Game">
-    <TriviaController class="trivia-controller"/>
+    <TriviaController/>
   </div>
 </template>
 

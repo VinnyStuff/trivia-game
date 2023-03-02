@@ -98,7 +98,8 @@ export default {
 
 #category-container{
     background-color: #FF5656;
-    width: max-content;
+    width: content;
+    max-width: max-content;
     text-align: center;
     margin: 0 auto;
     padding: 2px 10px;
@@ -147,10 +148,6 @@ export default {
     }
     #answers-container >  button{   
         font-size: clamp(16px,  2.6vw, 20px)
-    }
-
-    .trivia-container{
-         padding: 10.8vw; 
     }
 }
 @media only screen and (max-width: 360px) {

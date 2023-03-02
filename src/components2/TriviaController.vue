@@ -1,6 +1,6 @@
 <template>
     <div class="trivia-controller" v-if="questionData !== null">
-<!--    <Trivia
+      <Trivia
         v-if="gameEnds == false"
         :index="questionIndex"
         :question="decodeEntities(questionData[questionIndex].question)"
@@ -10,19 +10,23 @@
         :initialCountdownValue="countdownValueStart"
         :gameEnds="gameEnds"
         @trivia-click="nextQuestion($event)" 
-        /> -->
-        <!-- answers have decodeEntities() when suffle the answers-->
+    />   
+
+        <!-- answers have decodeEntities() when suffle the answers -->
         
-     <!--    <TriviaResults 
+     <TriviaResults 
         class="trivia-results" v-else
         :questionsObject="questionData"
         :allQuestionsAnswers="allAnswers"
         :correctAnswers="correctAnswers"
         :questionsAnswered="questionsAnswered"
         :questionsCategory="decodeEntities(questionData[questionIndex].category)"
-        /> -->
+    />  
 
-        <MainMenu/>
+
+
+        
+       <!-- <MainMenu class="main-menu"/> -->
     </div>
 </template>
 
@@ -131,8 +135,12 @@ export default {
 </script>
 
 <style scoped>
-.trivia-controller > div{
+.trivia-controller{
+    margin: 12px 30px;
     max-width: 650px;
+}
+.trivia-controller > div{
+    max-width: 100%;
     min-height: 900px;
 
     border-radius: 30px;
@@ -148,12 +156,12 @@ export default {
         padding: 6vw;
     }
 }
-.trivia-controller{
-  margin: 12px 30px;
-}
 @media only screen and (max-width: 510px) {
-  .trivia-controller{
-    margin: 12px 15px;
-  }
+    .trivia-controller{
+        margin: 12px 15px;
+    }
+}
+.trivia-controller .main-menu {
+    padding: 0px;
 }
 </style>

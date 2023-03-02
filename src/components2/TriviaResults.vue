@@ -86,10 +86,12 @@ p{
     margin-bottom: 12px;
 }
 .questions-category{
-    width: max-content;
     margin: 0 auto;
     margin-bottom: 12px;
     padding: 5px 20px;
+    
+    width: content;
+    max-width: max-content;
 }
 
 .question-state{
