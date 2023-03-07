@@ -116,7 +116,4 @@ h3{
     font-weight: 500;
     margin-top: 3px;
 }
-.v-progress-circular{
-    
-}
 </style>

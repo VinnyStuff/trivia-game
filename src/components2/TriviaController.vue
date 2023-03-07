@@ -1,32 +1,29 @@
 <template>
     <div class="trivia-controller" v-if="questionData !== null">
-      <Trivia
-        v-if="gameEnds == false"
-        :index="questionIndex"
-        :question="decodeEntities(questionData[questionIndex].question)"
-        :category="decodeEntities(questionData[questionIndex].category)"
-        :amount-questions="questionData.length"
-        :answers="currentQuestionAnswers" 
-        :initialCountdownValue="countdownValueStart"
-        :gameEnds="gameEnds"
-        @trivia-click="nextQuestion($event)" 
-    />   
+        <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
+            :theme="decodeEntities(questionData[questionIndex].category)"
+            @get-started="() => { startedGame = true; }" 
+        />
 
-        <!-- answers have decodeEntities() when suffle the answers -->
-        
-     <TriviaResults 
-        class="trivia-results" v-else
-        :questionsObject="questionData"
-        :allQuestionsAnswers="allAnswers"
-        :correctAnswers="correctAnswers"
-        :questionsAnswered="questionsAnswered"
-        :questionsCategory="decodeEntities(questionData[questionIndex].category)"
-    />  
+        <Trivia class="trivia-container"
+            v-else-if="gameEnds === false && startedGame === true"
+            :index="questionIndex"
+            :question="decodeEntities(questionData[questionIndex].question)"
+            :category="decodeEntities(questionData[questionIndex].category)"
+            :amount-questions="questionData.length"
+            :answers="currentQuestionAnswers" 
+            :initialCountdownValue="countdownValueStart"
+            :gameEnds="gameEnds"
+            @trivia-click="nextQuestion($event)" 
+        />       
 
-
-
-        
-       <!-- <MainMenu class="main-menu"/> -->
+        <TriviaResults class="trivia-results-container" v-else
+            :questionsObject="questionData"
+            :allQuestionsAnswers="allAnswers"
+            :correctAnswers="correctAnswers"
+            :questionsAnswered="questionsAnswered"
+            :questionsCategory="decodeEntities(questionData[questionIndex].category)"
+        />
     </div>
 </template>
 
@@ -45,6 +42,7 @@ export default {
             questionIndex: 0, //current question
             currentQuestionAnswers: [], //current answers in current questions 
             countdownValueStart: 30, 
+            startedGame: false,
             gameEnds: false, //when game ends
 
             //for triviaResults
@@ -140,7 +138,7 @@ export default {
     max-width: 650px;
 }
 .trivia-controller > div{
-    max-width: 100%;
+    min-width: 100%;
     min-height: 900px;
 
     border-radius: 30px;
@@ -150,6 +148,9 @@ export default {
 
     -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
     box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
+
+    display: flex;
+    flex-direction: column ;
 }
 @media only screen and (max-width: 700px) {
     .trivia-controller > div{
@@ -161,7 +162,8 @@ export default {
         margin: 12px 15px;
     }
 }
-.trivia-controller .main-menu {
-    padding: 0px;
+
+.trivia-controller .main-menu{
+    min-height: max-content;
 }
 </style>

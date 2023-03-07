@@ -12,7 +12,6 @@ import TriviaController from './components2/TriviaController.vue';
 </template>
 
 <style scoped>
-
 .Game{
   width: 100vw;
   min-height: 100vh;

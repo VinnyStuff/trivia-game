@@ -114,7 +114,7 @@ export default {
 }
 
 #answers-container >  button{
-    background-color: #EE2B47;
+    background-color: #FF5656;
     width: 100%;
     border: none;
     margin: 6px 0px;

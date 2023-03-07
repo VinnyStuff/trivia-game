@@ -66,6 +66,7 @@ p{
 }
 .questions-category > p{
     margin: 0px 0px;
+    text-align: center;
 }
 .questions , .questions-category{
     width: 100%;
@@ -89,7 +90,7 @@ p{
     margin: 0 auto;
     margin-bottom: 12px;
     padding: 5px 20px;
-    
+
     width: content;
     max-width: max-content;
 }
