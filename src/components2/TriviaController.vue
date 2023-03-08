@@ -62,8 +62,6 @@ export default {
         async getApiData(){
             this.questionData = await this.fetchData();
             this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
-
-            
         },
         shuffleAnswers(index){
             if(this.questionData !== null){
