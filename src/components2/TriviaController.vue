@@ -2,7 +2,7 @@
     <div class="trivia-controller" v-if="questionData !== null">
         <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
             :theme="decodeEntities(questionData[questionIndex].category)"
-            @get-started="() => { startedGame = true; }" 
+            @get-started-click="startedGame = true" 
         />
 
         <Trivia class="trivia-container"
@@ -28,7 +28,7 @@
 </template>
 
 
-<script setup> //um bom nome para esse script tambem seria TriviaController
+<script setup>
 import Trivia from './Trivia.vue'
 import TriviaResults from './TriviaResults.vue'
 import MainMenu from './MainMenu.vue'

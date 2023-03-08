@@ -1,19 +1,31 @@
 <template>
     <div class="trivia-results">
-        <div class="questions-category">
-            <p>{{ questionsCategory }}</p>
-        </div>
-        <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :key="questionsIndex" :class="{ 'correct-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'correct', 'wrong-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'wrong', 'not-answered': checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'}">
-            <div class="question-state" >
-                <Correct v-if="checkIfQuestionsIsCorrect(questionsIndex) === 'correct'"/>
-                <NotAnswered v-else-if="checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'"/>
-                <Wrong v-else-if="checkIfQuestionsIsCorrect(questionsIndex) === 'wrong'"/>
+        <div class="results" v-if="showTriviaDialog === false">
+            <div class="questions-category">
+                <p>put something</p>
             </div>
-            <p>{{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
-
-            <div class="questions-answers">
-                
-            </div> 
+            <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :key="questionsIndex" :class="{ 'correct-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'correct', 'wrong-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'wrong', 'not-answered': checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'}">
+                <div class="question-state" >
+                    <Correct v-if="checkIfQuestionsIsCorrect(questionsIndex) === 'correct'"/>
+                    <NotAnswered v-else-if="checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'"/>
+                    <Wrong v-else-if="checkIfQuestionsIsCorrect(questionsIndex) === 'wrong'"/>
+                </div>
+                <p>{{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
+                <div class="chevron-container" @click="showTriviaDialog = true, currentDialogQuestionIndex = questionsIndex">
+                    <ChevronRight class="chevron-right"/>
+                    <v-tooltip activator="parent" location="bottom">See the question</v-tooltip>
+                </div>
+            </div>
+        </div>
+        <div class="trivia-dialog" v-else>
+            <TriviaDialog
+                @back-click="() => { showTriviaDialog = false; }" 
+                :index="currentDialogQuestionIndex"
+                :amountQuestions="questionsObject.length"
+                :question="decodeEntities(questionsObject[currentDialogQuestionIndex].question)"
+                :category="decodeEntities(questionsObject[currentDialogQuestionIndex].category)"
+                :answers="allQuestionsAnswers"
+            />
         </div>
     </div>
 </template>
@@ -22,7 +34,9 @@
 import Wrong from '../components/icons/Wrong.vue'
 import Correct from '../components/icons/Check.vue'
 import NotAnswered from '../components/icons/QuestionMark.vue'
-import ChevronDown from '../components/icons/ChevronDown.vue'
+import ChevronRight from '../components/icons/ChevronRight.vue'
+
+import TriviaDialog from './TriviaResultsDialog.vue'
 </script>
 
 <script>
@@ -32,9 +46,13 @@ export default {
         allQuestionsAnswers: Array,
         correctAnswers: Array,
         questionsAnswered: Array,
-        questionsCategory: String,
     },
-    
+    data(){
+        return{
+            showTriviaDialog: false,
+            currentDialogQuestionIndex: 0,
+        }
+    },
     methods:{
         decodeEntities(text) {
             const el = document.createElement('textarea');
@@ -52,7 +70,10 @@ export default {
                 return 'wrong';
             }
         },
-    } 
+    },
+    mounted(){
+        
+    }
 }
 </script>
 
@@ -119,7 +140,23 @@ p{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.chevron-container{
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    top: 50%;
+    transform: translateY(-50%);
 
+    right: 0;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.chevron-container > .chevron-right{
+    height: 100%;
+    width: 100%;
+
+    stroke: #9A9A9A;
+}
 
 .correct-answer{
     background-color: #70C050;
@@ -138,6 +175,9 @@ p{
 .correct-answer > p{
     color: white;
 }
+.correct-answer > .chevron-container > .chevron-right{
+    stroke: white;
+}
 
 .wrong-answer > .question-state{
     border: 2px solid #ED4956;
@@ -151,55 +191,5 @@ p{
 }
 .not-answered > .question-state > svg{
     fill: #8B8B8B;
-}
-
-.chevron-down-button{
-    width: 30px;
-    height: 30px;
-
-    position: absolute;
-    top: 50%;
-    right: 1.5%;
-    transform: translateY(-50%);
-}
-.chevron-down-button > svg{
-    width: 22px;
-    height: 22px;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    stroke: #3A3A3A;
-    stroke-width: 3px;
-}
-.chevron-down-button:hover{
-    cursor : pointer;
-    opacity: 0.5;
-    transition: 100ms ease;
-}
-.chevron-down-button:active{
-    opacity: 1;
-    transition: 100ms ease;
-}
-.correct-answer > .chevron-down-button > svg{
-    stroke: white;
-    stroke-width: 3px;
-}
-.wrong-answer > .chevron-down-button > svg{
-    stroke: #ED4956;
-    stroke-width: 3px;
-}
-.not-answered > .chevron-down-button > svg{
-    stroke: #8B8B8B;
-    stroke-width: 3px;
-}
-
-.questions-answers{
-
-}
-.questions-answers > p{
-
 }
 </style>

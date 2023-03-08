@@ -10,8 +10,8 @@
             <h3>The theme of our quiz is updated daily.</h3>
         </div>
         <div class="buttons-container">
-            <button class="get-started" @click ="$emit('get-started')">Get Started</button>
-            <button class="select-other" @click ="$emit('select-other')">Select other</button>
+            <button class="get-started" @click ="$emit('get-started-click')">Get Started</button>
+            <button class="select-other" @click ="$emit('select-other-click')">Select other</button>
         </div>
     </div>
 </template>
