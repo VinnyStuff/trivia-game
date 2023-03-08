@@ -2,9 +2,9 @@
     <div class="trivia-results">
         <div class="results" v-if="showTriviaDialog === false">
             <div class="questions-category">
-                <p>put something</p>
+                <v-chip class="ma-2" color="green" text-color="white" size="large">Your score: {{ amountCorrectAnswersUserGetted }}/{{ questionsObject.length }}</v-chip>
             </div>
-            <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :key="questionsIndex" :class="{ 'correct-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'correct', 'wrong-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'wrong', 'not-answered': checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'}">
+            <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :class="{ 'correct-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'correct', 'wrong-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'wrong', 'not-answered': checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'}">
                 <div class="question-state" >
                     <Correct v-if="checkIfQuestionsIsCorrect(questionsIndex) === 'correct'"/>
                     <NotAnswered v-else-if="checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'"/>
@@ -29,6 +29,7 @@
                 :questionsAnswered="questionsAnswered"
             />
         </div>
+        
     </div>
 </template>
   
@@ -39,6 +40,7 @@ import NotAnswered from '../components/icons/QuestionMark.vue'
 import ChevronRight from '../components/icons/ChevronRight.vue'
 
 import TriviaDialog from './TriviaResultsDialog.vue'
+import { baseCompile } from '@vue/compiler-core'
 </script>
 
 <script>
@@ -53,6 +55,7 @@ export default {
         return{
             showTriviaDialog: false,
             currentDialogQuestionIndex: 0,
+            amountCorrectAnswersUserGetted: 0, 
         }
     },
     methods:{
@@ -76,7 +79,9 @@ export default {
     mounted(){
         console.log(this.correctAnswers);
         console.log(this.questionsAnswered);
-    }
+
+        this.amountCorrectAnswersUserGetted = this.$el.querySelectorAll('.correct-answer').length;
+    },
 }
 </script>
 
@@ -104,11 +109,7 @@ p{
     line-height: 22px;
     color: #3A3A3A;
 }
-.questions-category > p{
-    margin: 0px 0px;
-    text-align: center;
-}
-.questions , .questions-category{
+.questions{
     width: 100%;
     height: max-content;
     font-size: 20px;
@@ -127,12 +128,8 @@ p{
     margin-bottom: 12px;
 }
 .questions-category{
-    margin: 0 auto;
-    margin-bottom: 12px;
-    padding: 5px 20px;
-
-    width: content;
-    max-width: max-content;
+    text-align: center;
+    margin-bottom: 4px;
 }
 
 .question-state{
