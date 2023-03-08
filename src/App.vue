@@ -22,4 +22,10 @@ import TriviaController from './components2/TriviaController.vue';
   justify-content: center;
   align-items: center; 
 }
+@media print {
+  body { 
+    overflow: auto;
+    height: auto; 
+  }
+}
 </style>

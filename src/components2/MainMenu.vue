@@ -25,8 +25,18 @@ export default {
 </script>
 
 <style scoped>
+@keyframes showMenu{
+    0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 .main-menu-container{
     text-align: center;
+    animation: showMenu 0.33s ease forwards;
 }
 .main-menu-container > div{
     margin-bottom: 20px;

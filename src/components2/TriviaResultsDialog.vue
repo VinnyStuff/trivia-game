@@ -5,7 +5,8 @@
             <h3>{{ index + 1}}/{{ amountQuestions }}</h3>
         </div>
         <div class="back-container" @click="$emit('back-click')">
-            <h1>back</h1>
+            <v-tooltip activator="parent" location="bottom">Back to results</v-tooltip>
+            <ChevronRight class="back"/>
         </div>
         <div class="question-container">
             <h1>{{ question }}</h1>
@@ -14,10 +15,16 @@
             <h3>{{ category }}</h3>
         </div>
         <div class="answers-container">
-            <div class="answer" v-for="(answer, answersIndex) in answers[index]" :key="answersIndex" :class="{'correct-answer-chosen':  applyStylesInAnswers(currentQuestionAnswers[answersIndex]) === 'correct answer chosen'}">
+            <div class="answer" 
+            v-for="(answer, answersIndex) in answers[index]" :key="answersIndex" 
+            :class="{
+                'correct-answer-chosen':  applyStylesInAnswers(currentQuestionAnswers[answersIndex]) === 'correct answer chosen',
+                'correct-answer-not-chosen': applyStylesInAnswers(currentQuestionAnswers[answersIndex]) === 'correct answer not chosen',
+                'wrong-answer-chosen': applyStylesInAnswers(currentQuestionAnswers[answersIndex]) === 'wrong answer chosen'}">
+
                 <div class="question-state">
-                    <Correct class="correct" v-if="applyStylesInAnswers(currentQuestionAnswers[answersIndex]) === 'correct answer chosen'"/>
-                    <Wrong class="wrong" v-else/>
+                    <Correct class="correct"/>
+                    <Wrong class="wrong"/>
                 </div>
                 <p>{{ currentQuestionAnswers[answersIndex] }}</p>
             </div>
@@ -27,9 +34,9 @@
 
 <script setup>
 import IconHelpCircle from '../components/icons/IconHelpCircle.vue'
-
 import Wrong from '../components/icons/Wrong.vue'
 import Correct from '../components/icons/Check.vue'
+import ChevronRight from '../components/icons/ChevronRight.vue'
 </script>
 
 <script>
@@ -44,13 +51,16 @@ export default {
         questionsAnswered: Array,
     },
     methods:{
-        applyStylesInAnswers(currentAnswer){
+        applyStylesInAnswers(currentAnswer){ //here not use currentQuestionAnswers
             if(currentAnswer === this.currentCorrectAnswer && currentAnswer === this.currentQuestionAnswered){
                 return 'correct answer chosen';
             }
-            else{
-                return
+            else if (currentAnswer === this.currentCorrectAnswer){
+                return 'correct answer not chosen'
             }
+            else if(currentAnswer !== this.currentCorrectAnswer && currentAnswer === this.currentQuestionAnswered){
+                return 'wrong answer chosen'
+            } 
         },
     },
     computed:{
@@ -77,7 +87,9 @@ export default {
     top: 50%;
     display: flex;
     height: 25px;
-    padding-top: 17px;
+    padding-top: 25px;
+
+    justify-content: center;
 }
 .question-index-container > svg{
     margin-top: 2.2px;
@@ -86,8 +98,19 @@ export default {
 }
 .back-container{
     position: absolute;
-    right: 0;
-    background-color: #8F8F8F;
+    height: 25px;
+    width: 25px;
+    transform: scaleX(-1);
+    border-radius: 30px;
+    margin-top: -4px;
+    height: 35px;
+    width: 35px;
+    cursor: pointer;
+}
+.back-container > .back{
+    height: 100%;
+    width: 100%;
+    stroke: rgb(78, 78, 78);
 }
 .question-container{
     margin: 0 auto;
@@ -171,11 +194,15 @@ p{
     fill: #F599A0;
     stroke: #F599A0;
 }
+.question-state > .correct{
+    display: none;
+}
 
 /*  */
 
 .correct-answer-chosen{
     background-color: #70C050;
+    transform: scale(1.05);
 }
 .correct-answer-chosen > .question-state{
     background-color: white;
@@ -184,6 +211,10 @@ p{
 .correct-answer-chosen > .question-state > .correct{
     stroke: #70C050;
     fill: #70C050;
+    display: block;
+}
+.correct-answer-chosen > .question-state > .wrong{
+    display: none;
 }
 .correct-answer-chosen > p{
     color: white;
@@ -200,6 +231,10 @@ p{
 .correct-answer-not-chosen > .question-state > .correct{
     stroke: white;
     fill: white;
+    display: block;
+}
+.correct-answer-not-chosen > .question-state > .wrong{
+    display: none;
 }
 .correct-answer-not-chosen > p{
     color: white;
@@ -210,6 +245,7 @@ p{
 
 .wrong-answer-chosen{
     background-color: #ED4956;
+    transform: scale(1.05);
 }
 .wrong-answer-chosen > .question-state{
     background-color: white;
@@ -218,6 +254,10 @@ p{
 .wrong-answer-chosen > .question-state > .wrong{
     stroke: #ED4956;
     fill: #ED4956;
+    display: block;
+}
+.wrong-answer-chosen > .question-state > .correct{
+    display: none;
 }
 .wrong-answer-chosen > p{
     color: white;

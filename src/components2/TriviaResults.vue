@@ -12,8 +12,8 @@
                 </div>
                 <p>{{ decodeEntities(questionsObject[questionsIndex].question) }}</p>
                 <div class="chevron-container" @click="showTriviaDialog = true, currentDialogQuestionIndex = questionsIndex">
-                    <ChevronRight class="chevron-right"/>
                     <v-tooltip activator="parent" location="bottom">See the question</v-tooltip>
+                    <ChevronRight class="chevron-right"/>
                 </div>
             </div>
         </div>
@@ -81,6 +81,22 @@ export default {
 </script>
 
 <style scoped>
+@keyframes showDialog{
+    0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+.trivia-dialog{
+    animation: showDialog 0.25s ease forwards;
+}
+.results{
+    animation: showDialog 0.25s ease forwards;
+}
+
 p{
     font-size: 18px;
     text-align: justify;
