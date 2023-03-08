@@ -19,12 +19,14 @@
         </div>
         <div class="trivia-dialog" v-else>
             <TriviaDialog
-                @back-click="() => { showTriviaDialog = false; }" 
+                @back-click="showTriviaDialog = false" 
                 :index="currentDialogQuestionIndex"
                 :amountQuestions="questionsObject.length"
                 :question="decodeEntities(questionsObject[currentDialogQuestionIndex].question)"
                 :category="decodeEntities(questionsObject[currentDialogQuestionIndex].category)"
                 :answers="allQuestionsAnswers"
+                :correctAnswer="correctAnswers"
+                :questionsAnswered="questionsAnswered"
             />
         </div>
     </div>
@@ -61,7 +63,7 @@ export default {
         },
         checkIfQuestionsIsCorrect(currentQuestionIndex){
             if (this.questionsAnswered[currentQuestionIndex] === this.correctAnswers[currentQuestionIndex]){
-                return 'correct'
+                return 'correct';
             }
             else if (this.questionsAnswered[currentQuestionIndex] === 'this question is not answered'){
                 return 'notAnswered';
@@ -72,7 +74,8 @@ export default {
         },
     },
     mounted(){
-        
+        console.log(this.correctAnswers);
+        console.log(this.questionsAnswered);
     }
 }
 </script>

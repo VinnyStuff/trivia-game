@@ -14,12 +14,12 @@
             <h3>{{ category }}</h3>
         </div>
         <div class="answers-container">
-            <div class="answer" v-for="(answer, answersIndex) in answers[index]" :key="answersIndex">
+            <div class="answer" v-for="(answer, answersIndex) in answers[index]" :key="answersIndex" :class="{'correct-answer-chosen':  applyStylesInAnswers(currentQuestionAnswers[answersIndex]) === 'correct answer chosen'}">
                 <div class="question-state">
-                    <Correct class="correct"/>
-                    <Wrong class="wrong"/>
+                    <Correct class="correct" v-if="applyStylesInAnswers(currentQuestionAnswers[answersIndex]) === 'correct answer chosen'"/>
+                    <Wrong class="wrong" v-else/>
                 </div>
-                <p>{{ answers[index][answersIndex] }}</p>
+                <p>{{ currentQuestionAnswers[answersIndex] }}</p>
             </div>
         </div>
     </div>
@@ -40,9 +40,34 @@ export default {
         amountQuestions: Number,
         category: String, 
         answers: Array, 
+        correctAnswer: Array,
+        questionsAnswered: Array,
+    },
+    methods:{
+        applyStylesInAnswers(currentAnswer){
+            if(currentAnswer === this.currentCorrectAnswer && currentAnswer === this.currentQuestionAnswered){
+                return 'correct answer chosen';
+            }
+            else{
+                return
+            }
+        },
+    },
+    computed:{
+        currentQuestionAnswers(){
+            return this.answers[this.index];
+        },
+        currentCorrectAnswer(){
+            return this.correctAnswer[this.index];
+        },
+        currentQuestionAnswered(){
+            return this.questionsAnswered[this.index];
+        }
     },
     mounted(){
-        console.log(this.answers)
+        console.log(this.currentQuestionAnswers + '  essas são as respostas')
+        console.log(this.currentCorrectAnswer + '  essa é a resposta certa')
+        console.log(this.currentQuestionAnswered + '   essa é a resposta que o usuario colocou')  
     }
 };
 </script>
@@ -116,7 +141,6 @@ export default {
     border: 2px solid #F6A2A8;
     border-radius: 100px;
 
-    /* Inside auto layout */
     flex: none;
     position: absolute;
     top: 50%;
