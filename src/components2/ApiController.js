@@ -68,7 +68,7 @@ function getStarted(){ //this function call when player acepted play with today'
         category =  '';
     }
     else {
-        category =  '&category=' + categories[currentDay].value;
+        category =  '&category=' + categories[currentDay - 1].value;
     }
 
 

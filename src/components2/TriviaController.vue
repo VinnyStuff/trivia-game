@@ -2,7 +2,8 @@
     <div class="trivia-controller">
         <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
             :todayTheme="decodeEntities(todayCategory)"
-            @get-started-click="startedGame = true" 
+            @get-started-click="getStarted()" 
+            @select-other-click='selectOther()'
         />
 
         <Trivia class="trivia-container"
@@ -52,21 +53,27 @@ export default {
             questionsAnswered: [], //array of all chosen answers
 
             todayCategory: ApiController.todayCategory(),
-            api: 'https://opentdb.com/api.php?amount=10'
         }
     },
     methods:{
-        async fetchData(){
-            let response = await fetch (this.api);
-            let data = await response.json();
-            
-            console.log(data.results)
-            return data.results;
-        },
-        async getApiData(){
-            this.questionData = await this.fetchData();
+        async getTodayCategory(){
+            this.questionData = await ApiController.testOne();
             this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
         },
+        async getUserVariation(){
+
+        },
+
+        getStarted(){
+            this.startedGame = true;
+            //keep the theme of the day in the questionData
+
+            //questionData is obtained earlier to be faster in loading the quiz
+        },
+        selectOther(){
+
+        },
+
         shuffleAnswers(index){
             if(this.questionData !== null){
                 const correctAnswer = this.questionData[index].correct_answer;
@@ -129,11 +136,7 @@ export default {
         },
     },
     async mounted(){
-        this.getApiData();
-        console.log(ApiController.todayCategory());
-        /* console.log(ApiController.getStarted()); */
-
-        /* console.log(await ApiController.testOne()); working*/ 
+        this.getTodayCategory();
     },
     
 }
