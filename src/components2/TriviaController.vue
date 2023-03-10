@@ -1,12 +1,12 @@
 <template>
-    <div class="trivia-controller" v-if="questionData !== null">
+    <div class="trivia-controller">
         <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
-            :theme="decodeEntities(questionData[questionIndex].category)"
+            :todayTheme="decodeEntities(todayCategory)"
             @get-started-click="startedGame = true" 
         />
 
         <Trivia class="trivia-container"
-            v-else-if="gameEnds === false && startedGame === true"
+            v-else-if="gameEnds === false && startedGame === true && questionData !== null"
             :index="questionIndex"
             :question="decodeEntities(questionData[questionIndex].question)"
             :category="decodeEntities(questionData[questionIndex].category)"
@@ -32,6 +32,7 @@
 import Trivia from './Trivia.vue'
 import TriviaResults from './TriviaResults.vue'
 import MainMenu from './MainMenu.vue'
+import ApiController from './ApiController.js'
 </script>
 
 <script>
@@ -49,11 +50,14 @@ export default {
             allAnswers: [],
             correctAnswers: [], // array of correct answers
             questionsAnswered: [], //array of all chosen answers
+
+            todayCategory: ApiController.todayCategory(),
+            api: 'https://opentdb.com/api.php?amount=10'
         }
     },
     methods:{
         async fetchData(){
-            let response = await fetch ('https://opentdb.com/api.php?amount=10');
+            let response = await fetch (this.api);
             let data = await response.json();
             
             console.log(data.results)
@@ -126,7 +130,12 @@ export default {
     },
     async mounted(){
         this.getApiData();
+        console.log(ApiController.todayCategory());
+        /* console.log(ApiController.getStarted()); */
+
+        /* console.log(await ApiController.testOne()); working*/ 
     },
+    
 }
 </script>
 

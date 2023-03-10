@@ -6,7 +6,7 @@
         </div>
         <div class="header-container">
             <h1>Welcome, today's theme is:</h1>
-            <h1>{{ theme }}</h1>
+            <h1>{{ todayTheme }}</h1>
             <h3>The theme of our quiz is updated daily.</h3>
         </div>
         <div class="buttons-container">
@@ -19,7 +19,7 @@
 <script>
 export default {
     props: {
-        theme: String,
+        todayTheme: String,
     },
 };
 </script>

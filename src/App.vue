@@ -1,6 +1,5 @@
 <script setup>
 import TriviaController from './components2/TriviaController.vue';
-import ApiController from './components2/ApiController.vue';
 </script>
 
 <script>
@@ -8,8 +7,7 @@ import ApiController from './components2/ApiController.vue';
 
 <template>
   <div class="Game">
-    <!-- <TriviaController/> -->
-    <ApiController/>
+    <TriviaController/>
   </div>
 </template>
 
