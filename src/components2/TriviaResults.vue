@@ -2,7 +2,7 @@
     <div class="trivia-results">
         <div class="results" v-if="showTriviaDialog === false">
             <div class="questions-category">
-                <v-chip class="ma-2" color="green" text-color="white" size="large">Your score: {{ amountCorrectAnswersUserGetted }}/{{ questionsObject.length }}</v-chip>
+                <v-chip class="pa-5 mb-4" color="green" text-color="white" size="large"><h2>Your score: {{ amoutCorrectAnswers }}/{{ questionsObject.length }}</h2></v-chip>
             </div>
             <div class="questions" v-for="(questions, questionsIndex) in questionsObject" :class="{ 'correct-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'correct', 'wrong-answer': checkIfQuestionsIsCorrect(questionsIndex) === 'wrong', 'not-answered': checkIfQuestionsIsCorrect(questionsIndex) === 'notAnswered'}">
                 <div class="question-state" >
@@ -29,7 +29,6 @@
                 :questionsAnswered="questionsAnswered"
             />
         </div>
-        
     </div>
 </template>
   
@@ -40,7 +39,6 @@ import NotAnswered from '../components/icons/QuestionMark.vue'
 import ChevronRight from '../components/icons/ChevronRight.vue'
 
 import TriviaDialog from './TriviaResultsDialog.vue'
-import { baseCompile } from '@vue/compiler-core'
 </script>
 
 <script>
@@ -79,9 +77,18 @@ export default {
     mounted(){
         console.log(this.correctAnswers);
         console.log(this.questionsAnswered);
-
-        this.amountCorrectAnswersUserGetted = this.$el.querySelectorAll('.correct-answer').length;
     },
+    computed:{
+        amoutCorrectAnswers(){
+             let count = 0;
+             for (let i = 0; i < this.questionsObject.length; i++){
+                if (this.questionsAnswered[i] === this.correctAnswers[i]){
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
 }
 </script>
 

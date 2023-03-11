@@ -1,18 +1,63 @@
 <template>
     <div class="main-menu-container">
-        <div class="ilustration-container">
-            <h1>📚 Vrika Quiz</h1>
-            <img src="./icons/Questions-bro.png" alt="">
+        <div class="main-menu" v-if="selectOtherView === false">
+            <div class="ilustration-container">
+                <h1>📚 Vrika Quiz</h1>
+                <img src="./icons/Questions-bro.png" alt="">
+            </div>
+            <div class="header-container">
+                <h1>Welcome, today's theme is:</h1>
+                <h1>{{ todayTheme }}</h1>
+                <h3>The theme of our quiz is updated daily.</h3>
+            </div>
+            <div class="buttons-container">
+                <button class="get-started-button" @click ="$emit('get-started-click')">Get Started</button>
+                <button class="select-other-button" @click ="selectOtherView = true">Custom Quiz</button>
+            </div>
         </div>
-        <div class="header-container">
-            <h1>Welcome, today's theme is:</h1>
-            <h1>{{ todayTheme }}</h1>
-            <h3>The theme of our quiz is updated daily.</h3>
-        </div>
-        <div class="buttons-container">
-            <button class="get-started" @click ="$emit('get-started-click')">Get Started</button>
-            <button class="select-other" @click ="$emit('select-other-click')">Select other</button>
-        </div>
+        <div class="select-other-container" v-else>
+            <h1>Customize your quiz to fit your preferences:</h1>
+            <div class="number-of-questions">
+                <v-select
+                    clearable
+                    label="Number of questions"
+                    :items="numberOfQuestions"
+                    variant="solo"
+                    v-model="numberOfQuestion"
+                ></v-select>
+            </div>
+            <div class="select-category">
+                <v-select
+                    clearable
+                    label="Category"
+                    :items="categories"
+                    variant="solo"
+                    v-model="category"
+                ></v-select>
+            </div>
+            <div class="select-difficulty">
+                <v-select
+                    clearable
+                    label="Difficulty"
+                    :items="difficulties"
+                    variant="solo"
+                    v-model="difficulty"
+                ></v-select>
+            </div>
+            <div class="select-type">
+                <v-select
+                    clearable
+                    label="Type of question"
+                    :items="types"
+                    variant="solo"
+                    v-model="type"
+                ></v-select>
+            </div>
+            <div class="buttons-container">
+                <button class="get-started-button"  @click ="$emit('start-custom-quiz', {numberOfQuestion, category, difficulty, type})">Start</button>
+                <button class="back-button" @click ="selectOtherView = false">Back</button>
+            </div>
+        </div> 
     </div>
 </template>
 
@@ -20,11 +65,38 @@
 export default {
     props: {
         todayTheme: String,
+        numberOfQuestions: Number,
+        categories: Array,
+        difficulties: Array,
+        types: Array,
+    },
+    data(){
+        return{
+            selectOtherView: false,
+            numberOfQuestion: this.numberOfQuestions[1],
+            category: this.categories[0],
+            difficulty: this.difficulties[0],
+            type: this.types[0],
+        }
     },
 };
 </script>
 
 <style scoped>
+.select-other-container{
+}
+.select-other-container > div{
+    margin-bottom: 5px;
+}
+.select-other-container > h1{
+    line-height: 40px;
+    margin-bottom: 20px;
+}
+
+.select-other-container{
+    width: 100%;
+} 
+
 @keyframes showMenu{
     0% {
     opacity: 0;
@@ -34,11 +106,15 @@ export default {
     opacity: 1;
   }
 }
-.main-menu-container{
+.main-menu{
     text-align: center;
     animation: showMenu 0.33s ease forwards;
 }
-.main-menu-container > div{
+.select-other-container{
+    text-align: center;
+    animation: showMenu 0.33s ease forwards;
+}
+.main-menu > div{
     margin-bottom: 20px;
 }
 .ilustration-container > h1{
@@ -51,6 +127,8 @@ export default {
     line-height: 42px;
 }
 .header-container > h3{
+    margin-top: 4px;
+    margin-bottom: -8px;
     font-size: 16px;
     color: #525252;
 }
@@ -64,12 +142,12 @@ export default {
 
     transition: 100ms ease;
 }
-.get-started{
+.get-started-button{
     background-color: #FF5656;
     border: 2px solid #FF5656;
     color: white;
 }
-.select-other{
+.select-other-button ,.back-button{
     background-color: transparent;
     color: black;
     border: 2px solid black;

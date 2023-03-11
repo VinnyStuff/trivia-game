@@ -1,9 +1,14 @@
 <template>
     <div class="trivia-controller">
-        <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
-            :todayTheme="decodeEntities(todayCategory)"
+            <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
+            :todayTheme="decodeEntities(ApiController.todayCategory.text)"
+            :categories="ApiController.categories.map(category => category.text)"
+            :difficulties="ApiController.difficulty"
+            :types="ApiController.type"
+            :numberOfQuestions="ApiController.numberOfQuestions"
+
             @get-started-click="getStarted()" 
-            @select-other-click='selectOther()'
+            @start-custom-quiz="getUserVariationAndPlay($event)"
         />
 
         <Trivia class="trivia-container"
@@ -51,28 +56,23 @@ export default {
             allAnswers: [],
             correctAnswers: [], // array of correct answers
             questionsAnswered: [], //array of all chosen answers
-
-            todayCategory: ApiController.todayCategory(),
         }
     },
     methods:{
-        async getTodayCategory(){
-            this.questionData = await ApiController.testOne();
+        async getTodayCategory(){ //for getStarted()
+            this.questionData = await ApiController.getTodayCategoryApiData();
             this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
         },
-        async getUserVariation(){
-
-        },
-
         getStarted(){
             this.startedGame = true;
             //keep the theme of the day in the questionData
 
             //questionData is obtained earlier to be faster in loading the quiz
         },
-        selectOther(){
-
+        getUserVariationAndPlay(customQuiz){ //for selectOther()()
+            console.log(customQuiz)
         },
+
 
         shuffleAnswers(index){
             if(this.questionData !== null){
@@ -156,8 +156,8 @@ export default {
     position: relative;
     padding: 40px;
 
-    -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
-    box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
+     -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
+    box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54);
 
     display: flex;
     flex-direction: column ;
