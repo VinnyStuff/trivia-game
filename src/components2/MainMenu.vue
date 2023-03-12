@@ -11,7 +11,10 @@
                 <h3>The theme of our quiz is updated daily.</h3>
             </div>
             <div class="buttons-container">
-                <button class="get-started-button" @click ="$emit('get-started-click')">Get Started</button>
+                <button class="get-started-button" @click ="$emit('get-started-click')">
+                    <label v-if="isLoading === false">Start</label>
+                    <v-progress-circular v-else indeterminate color="white" :size="24"></v-progress-circular>
+                </button>
                 <button class="select-other-button" @click ="selectOtherView = true">Custom Quiz</button>
             </div>
         </div>
@@ -42,6 +45,7 @@
                     :items="difficulties"
                     variant="solo"
                     v-model="difficulty"
+                    disabled
                 ></v-select>
             </div>
             <div class="select-type">
@@ -51,10 +55,14 @@
                     :items="types"
                     variant="solo"
                     v-model="type"
+                    disabled
                 ></v-select>
             </div>
             <div class="buttons-container">
-                <button class="get-started-button"  @click ="$emit('start-custom-quiz', newCustomQuiz)">Start</button>
+                <button class="get-started-button"  @click ="$emit('start-custom-quiz', newCustomQuiz)">
+                    <label v-if="isLoading === false">Start</label>
+                    <v-progress-circular v-else indeterminate color="white" :size="24"></v-progress-circular>
+                </button>
                 <button class="back-button" @click ="selectOtherView = false">Back</button>
             </div>
         </div> 
@@ -69,6 +77,7 @@ export default {
         categories: Array,
         difficulties: Array,
         types: Array,
+        isLoading: Boolean,
     },
     data(){
         return{

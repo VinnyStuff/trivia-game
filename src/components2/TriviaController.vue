@@ -6,6 +6,7 @@
             :difficulties="ApiController.difficulties"
             :types="ApiController.types"
             :numberOfQuestions="ApiController.numberOfQuestions"
+            :isLoading="loading"
 
             @get-started-click="getStarted()" 
             @start-custom-quiz="getNewQuiz($event)"
@@ -31,6 +32,13 @@
             :questionsAnswered="questionsAnswered"
             :questionsCategory="decodeEntities(questionData[questionIndex].category)"
         />
+
+        <v-snackbar v-model="snackbar" multi-line>
+            Unfortunately, we were unable to fetch any questions for your quiz. Please try again or refresh the page.
+            <template v-slot:actions>
+                <v-btn color="red" variant="text" @click="snackbar = false">Close</v-btn>
+            </template>
+        </v-snackbar>
     </div>
 </template>
 
@@ -57,27 +65,46 @@ export default {
             allAnswers: [],
             correctAnswers: [], // array of correct answers
             questionsAnswered: [], //array of all chosen answers
+            loading: false,
+
+            snackbar: false,
         }
     },
     methods:{
-        async getTodayCategory(){ //for getStarted()
-            this.questionData = await ApiController.getTodayCategoryApiData();
-            this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
-        },
-        getStarted(){
-            this.startedGame = true;
-            //keep the theme of the day in the questionData
+        async getStarted(){
+            try{
+                this.snackbar = false;
+                this.loading = true;
 
-            //questionData is obtained earlier to be faster in loading the quiz
+                this.questionData = await ApiController.getTodayCategoryApiData();
+                this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
+
+                this.startedGame = true;
+            }
+            catch(error){
+                this.snackbar = true;
+            }  
+            finally{
+                this.loading = false;
+            }
         },
 
         async getNewQuiz(customQuiz){ //for when custom quiz is created
-            this.questionData = await ApiController.getNewQuizApiData(customQuiz);
-            this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
+            try{
+                this.snackbar = false;
+                this.loading = true;
 
-            this.startedGame = true;
+                this.questionData = await ApiController.getNewQuizApiData(customQuiz);
+                this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
 
-            console.log(this.questionData);
+                this.startedGame = true;
+            }
+            catch(error){
+                this.snackbar = true;
+            }
+            finally{
+                this.loading = false;
+            }
         },
 
 
@@ -141,11 +168,7 @@ export default {
                 this.gameEnds = true;
             }
         },
-    },
-    async mounted(){
-        this.getTodayCategory();
-    },
-    
+    },    
 }
 </script>
 
