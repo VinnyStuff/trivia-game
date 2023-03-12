@@ -1,5 +1,7 @@
 # trivia-game
 
+![image](https://user-images.githubusercontent.com/70545559/224568974-e3db9d39-7c05-43bd-9dc7-fbf1ba82f69a.png)
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
