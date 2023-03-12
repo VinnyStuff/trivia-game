@@ -48,7 +48,7 @@ export default {
             <h1>{{ question }}</h1>
         </div>
         <div id="category-container">
-            <h3>{{ category }}</h3>
+            <h3>{{ category }} ({{  }})</h3>
         </div>
         <div id="answers-container">
            <button @click ="$emit('trivia-click', answersIndex), slideInAnimation()" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{options[answersIndex]}}) {{answers[answersIndex]}}</button>

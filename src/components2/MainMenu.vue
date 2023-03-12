@@ -54,7 +54,7 @@
                 ></v-select>
             </div>
             <div class="buttons-container">
-                <button class="get-started-button"  @click ="$emit('start-custom-quiz', {numberOfQuestion, category, difficulty, type})">Start</button>
+                <button class="get-started-button"  @click ="$emit('start-custom-quiz', newCustomQuiz)">Start</button>
                 <button class="back-button" @click ="selectOtherView = false">Back</button>
             </div>
         </div> 
@@ -79,12 +79,29 @@ export default {
             type: this.types[0],
         }
     },
+    computed: {
+        newCustomQuiz(){
+            let newQuiz = {
+                numberOfQuestion: this.numberOfQuestion,
+                numberOfQuestionIndex: this.numberOfQuestions.indexOf(this.numberOfQuestion),
+
+                category: this.category,
+                categoryIndex: this.categories.indexOf(this.category),
+
+                difficulty: this.difficulty,
+                difficultyIndex: this.difficulties.indexOf(this.difficulty),
+
+                type: this.type,
+                typeIndex: this.types.indexOf(this.type),
+
+            }
+            return newQuiz;
+        }
+    }
 };
 </script>
 
 <style scoped>
-.select-other-container{
-}
 .select-other-container > div{
     margin-bottom: 5px;
 }

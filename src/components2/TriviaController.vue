@@ -3,12 +3,12 @@
             <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
             :todayTheme="decodeEntities(ApiController.todayCategory.text)"
             :categories="ApiController.categories.map(category => category.text)"
-            :difficulties="ApiController.difficulty"
-            :types="ApiController.type"
+            :difficulties="ApiController.difficulties"
+            :types="ApiController.types"
             :numberOfQuestions="ApiController.numberOfQuestions"
 
             @get-started-click="getStarted()" 
-            @start-custom-quiz="getUserVariationAndPlay($event)"
+            @start-custom-quiz="getNewQuiz($event)"
         />
 
         <Trivia class="trivia-container"
@@ -69,8 +69,14 @@ export default {
 
             //questionData is obtained earlier to be faster in loading the quiz
         },
-        getUserVariationAndPlay(customQuiz){ //for selectOther()()
-            console.log(customQuiz)
+
+        async getNewQuiz(customQuiz){ //for when custom quiz is created
+            this.questionData = await ApiController.getNewQuizApiData(customQuiz);
+            this.currentQuestionAnswers = this.shuffleAnswers(this.questionIndex);
+
+            this.startedGame = true;
+
+            console.log(this.questionData);
         },
 
 

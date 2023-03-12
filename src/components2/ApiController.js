@@ -1,3 +1,4 @@
+const numberOfQuestions = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 const categories = [
     { value: '', text: 'Any Category' },
     { value: '9', text: 'General Knowledge' },
@@ -31,48 +32,77 @@ const categories = [
     { value: '23', text: 'History' },
     { value: '24', text: 'Politics' },
 ];
-const difficulty = ['Any Difficulty', 'Easy', 'Medium', 'Hard'];
-const type = ['Any Type', 'Multiple Choice', 'True / False'];
-const numberOfQuestions = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+const difficulties = ['Any Difficulty', 'Easy', 'Medium', 'Hard'];
+const types = ['Any Type', 'Multiple Choice', 'True / False'];
 
 const currentDay = (new Date().getDate()) - 1; //minus 1 for the month to start at 0 not 1
 const todayCategory = categories[currentDay]; 
 
-function selectedTodayCategory(){ //this function call when player acepted play with today's category - and the name of the button is "get started"
+function newNumberOfQuestion(number){
+    return number.numberOfQuestion;
+}
+function newCategory(index){
     let category = '';
 
-    if (categories[currentDay].value === ''){
+    if (categories[index].value === ''){
         category =  '';
     }
     else {
-        category =  '&category=' + categories[currentDay].value;
+        category =  '&category=' + categories[index].value;
     }
 
     return category;
 }
+function newDifficulty(index){
+    let difficulty = '';
+
+    if (difficulties[index] === 'Any Difficulty'){
+        difficulty =  '';
+    }
+    else {
+        difficulty =  '&difficulty=' + difficulties[index].toLowerCase();
+    }
+
+    return difficulty;
+}
+function newType(index){
+    let type = '';
+
+    if (types[index] === 'Any Type'){
+        type =  '';
+    }
+    else if (types[index] === 'Multiple Choice'){
+        type =  '&type=' + 'multiple';
+    }
+    else if (types[index] === 'True / False'){
+        type =  '&type=' + 'boolean';
+    }
+
+    return type;
+}
+
 async function getTodayCategoryApiData(){ 
-    let response = await fetch ('https://opentdb.com/api.php?amount=10' + selectedTodayCategory());
+    let response = await fetch ('https://opentdb.com/api.php?amount=10' + newCategory(currentDay));
     let data = await response.json();
     
     return await data.results;
 }
 
+async function getNewQuizApiData(customQuiz){
+    let numberOfQuestion = newNumberOfQuestion(customQuiz);
+    let category = newCategory(customQuiz.categoryIndex);
+    let difficulty = newDifficulty(customQuiz.difficultyIndex)
+    let type = newType(customQuiz.typeIndex)
 
+    let response = await fetch ('https://opentdb.com/api.php?amount=' + numberOfQuestion + category + difficulty + type)
 
-function selectNumberOfQuestions(){
-
-}
-function selectCategory(){
-
-}
-function selectDifficulty(){
-
-}
-function selectType(){
-
-}
-async function getUserVariationApiData(){
+    let data = await response.json();
     
+    return await data.results;
+
+    //https://opentdb.com/api.php?amount=15&category=18&difficulty=easy&type=multiple
+
+
 }
 
 
@@ -82,7 +112,8 @@ export default{
     todayCategory,
     getTodayCategoryApiData,
     categories,
-    difficulty,
-    type,
+    difficulties,
+    types,
     numberOfQuestions,
+    getNewQuizApiData,
 }
