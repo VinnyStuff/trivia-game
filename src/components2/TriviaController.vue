@@ -2,7 +2,7 @@
     <div class="trivia-controller">
             <MainMenu class="main-menu" v-if="startedGame === false && gameEnds === false"
             :todayTheme="decodeEntities(ApiController.todayCategory.text)"
-            :categories="ApiController.categories.map(category => category.text)"
+            :categories="ApiController.categories.map(category => category.text).slice(0, 25)"
             :difficulties="ApiController.difficulties"
             :types="ApiController.types"
             :numberOfQuestions="ApiController.numberOfQuestions"
