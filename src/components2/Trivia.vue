@@ -1,6 +1,7 @@
 <script setup>
 import Countdown from './Countdown.vue'
 import IconHelpCircle from '../components/icons/IconHelpCircle.vue'
+import Wrong from '../components/icons/Wrong.vue'
 </script>
 
 <script>
@@ -43,7 +44,7 @@ export default {
 
 <template>
     <div class="trivia-container" :class="{ slideIn: isAnimating }">
-        <div id="question-index-container"> 
+        <div id="question-index-container">  
             <IconHelpCircle/> 
             <h3>{{ index + 1}}/{{ amountQuestions }}</h3> 
         </div>
@@ -59,16 +60,47 @@ export default {
         <div id="answers-container">
            <button @click ="$emit('trivia-click', answersIndex), slideInAnimation()" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{options[answersIndex]}}) {{answers[answersIndex]}}</button>
         </div>
+        <div class="back-button-container" @click="$emit('back-button-click')">
+            <Wrong/>
+            <v-tooltip activator="parent" location="bottom">Back to Main Menu</v-tooltip>
+        </div>
     </div>
 </template>
 
 
 <style scoped>
+.back-button-container{
+    height: 30px;
+    width: 30px;
+
+    position: absolute;
+    right: 6.5%;
+
+    border-radius: 50px;
+    padding: 3px;
+    border: 2px solid #666666;
+    cursor: pointer;
+
+    transition: 200ms ease;
+
+}
+.back-button-container:active{
+    transform: scale(0.8);
+}
+.back-button-container > svg{
+    width: 100%;
+    height: 100%;
+    fill: #666666;
+}
+
+
 #question-index-container{
     top: 50%;
     display: flex;
     height: 25px;
     padding-top: 17px;
+
+    
 }
 
 #question-index-container > svg{
@@ -154,11 +186,6 @@ export default {
     }
     #answers-container >  button{   
         font-size: clamp(16px,  2.6vw, 20px)
-    }
-}
-@media only screen and (max-width: 360px) {
-    #time-stamp-container{
-        margin-left: 75%;
     }
 }
 

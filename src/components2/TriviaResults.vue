@@ -30,6 +30,10 @@
                 :questionsAnswered="questionsAnswered"
             />
         </div>
+        <div class="back-button-container" @click="$emit('back-button-click')" v-if="showTriviaDialog === false">
+            <Wrong/>
+            <v-tooltip activator="parent" location="bottom">Back to Main Menu</v-tooltip>
+        </div>
     </div>
 </template>
   
@@ -94,6 +98,30 @@ export default {
 </script>
 
 <style scoped>
+.back-button-container{
+    height: 30px;
+    width: 30px;
+
+    position: absolute;
+    right: 6.5%;
+
+    border-radius: 50px;
+    padding: 3px;
+    border: 2px solid #666666;
+    cursor: pointer;
+
+    transition: 200ms ease;
+
+}
+.back-button-container:active{
+    transform: scale(0.8);
+}
+.back-button-container > svg{
+    width: 100%;
+    height: 100%;
+    fill: #666666;
+}
+
 @keyframes showDialog{
     0% {
     opacity: 0;

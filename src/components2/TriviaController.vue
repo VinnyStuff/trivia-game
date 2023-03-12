@@ -22,7 +22,9 @@
             :answers="currentQuestionAnswers" 
             :initialCountdownValue="countdownValueStart"
             :gameEnds="gameEnds"
+            
             @trivia-click="nextQuestion($event)" 
+            @back-button-click="backToMainMenu()"
         />       
 
         <TriviaResults class="trivia-results-container" v-else
@@ -31,6 +33,8 @@
             :correctAnswers="correctAnswers"
             :questionsAnswered="questionsAnswered"
             :questionsCategory="decodeEntities(questionData[questionIndex].category)"
+
+            @back-button-click="backToMainMenu()"
         />
 
         <v-snackbar v-model="snackbar" multi-line>
@@ -168,6 +172,13 @@ export default {
                 this.gameEnds = true;
             }
         },
+        backToMainMenu(){
+            this.gameEnds = false;
+            this.gameEnds = false;
+            this.startedGame = false;
+            this.questionData = null,
+            this.questionIndex = 0;
+        }
     },    
 }
 </script>
