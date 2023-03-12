@@ -12,7 +12,7 @@
             <h1>{{ question }}</h1>
         </div>
         <div class="category-container">
-            <h3>{{ category }}</h3>
+            <h3>{{ category }} ({{ questionDifficulty }})</h3>
         </div>
         <div class="answers-container">
             <div class="answer" 
@@ -46,6 +46,7 @@ export default {
         question: String, 
         amountQuestions: Number,
         category: String, 
+        difficulty: String,
         answers: Array, 
         correctAnswer: Array,
         questionsAnswered: Array,
@@ -72,6 +73,9 @@ export default {
         },
         currentQuestionAnswered(){
             return this.questionsAnswered[this.index];
+        },
+        questionDifficulty(){
+            return this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)
         }
     },
     mounted(){

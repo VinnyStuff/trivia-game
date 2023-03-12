@@ -24,6 +24,7 @@
                 :amountQuestions="questionsObject.length"
                 :question="decodeEntities(questionsObject[currentDialogQuestionIndex].question)"
                 :category="decodeEntities(questionsObject[currentDialogQuestionIndex].category)"
+                :difficulty="questionsObject[currentDialogQuestionIndex].difficulty"
                 :answers="allQuestionsAnswers"
                 :correctAnswer="correctAnswers"
                 :questionsAnswered="questionsAnswered"

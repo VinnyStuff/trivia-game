@@ -16,6 +16,7 @@
             :index="questionIndex"
             :question="decodeEntities(questionData[questionIndex].question)"
             :category="decodeEntities(questionData[questionIndex].category)"
+            :difficulty="questionData[questionIndex].difficulty"
             :amount-questions="questionData.length"
             :answers="currentQuestionAnswers" 
             :initialCountdownValue="countdownValueStart"

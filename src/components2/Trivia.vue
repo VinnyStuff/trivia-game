@@ -10,6 +10,7 @@ export default {
         question: String, 
         amountQuestions: Number,
         category: String, 
+        difficulty: String,
         answers: Array, 
         initialCountdownValue: Number,
         gameEnds: Boolean,
@@ -31,6 +32,11 @@ export default {
     },
     mounted(){
         this.slideInAnimation();
+    },
+    computed:{
+        questionDifficulty(){
+            return this.difficulty.charAt(0).toUpperCase() + this.difficulty.slice(1)
+        }
     }
 };
 </script>
@@ -48,7 +54,7 @@ export default {
             <h1>{{ question }}</h1>
         </div>
         <div id="category-container">
-            <h3>{{ category }} ({{  }})</h3>
+            <h3>{{ category }} ({{ questionDifficulty }})</h3>
         </div>
         <div id="answers-container">
            <button @click ="$emit('trivia-click', answersIndex), slideInAnimation()" v-for="(answer, answersIndex) in answers" :key="answersIndex">{{options[answersIndex]}}) {{answers[answersIndex]}}</button>
