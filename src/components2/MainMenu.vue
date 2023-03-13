@@ -154,12 +154,21 @@ export default {
     padding: 20px 30px;
     max-height: 55vh;
     max-width: 55vh;
+
+    width: 80vw;
 }
 @media only screen and (max-height: 815px) {
     .ilustration-container > img{
         padding: 10px 40px;
         max-height: 50vh;
         max-width: 50vh;
+    }
+}
+@media only screen and (max-height: 700px) {
+    .ilustration-container > img{
+        padding: 10px 40px;
+        max-height: 40vh;
+        max-width: 40vh;
     }
 }
 .header-container > h1{
