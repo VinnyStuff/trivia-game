@@ -111,6 +111,9 @@ export default {
 </script>
 
 <style scoped>
+.main-menu-container{
+
+}
 .select-other-container > div{
     margin-bottom: 5px;
 }
@@ -135,19 +138,27 @@ export default {
 .main-menu{
     text-align: center;
     animation: showMenu 0.33s ease forwards;
+    position: relative;
+}
+.buttons-container{
+    position: relative;
 }
 .select-other-container{
     text-align: center;
     animation: showMenu 0.33s ease forwards;
 }
-.main-menu > div{
+.header-container ,.ilustration-container{ /* aaaaaaaaaaaaaa */
     margin-bottom: 20px;
 }
 .ilustration-container > h1{
     font-size: 20px;
 }
 .ilustration-container > img{
-    max-width: 82%;
+    height: 53vh;
+    max-width: 92%;
+
+    max-height: 550px;
+    max-width: 550px;
 }
 .header-container > h1{
     line-height: 42px;

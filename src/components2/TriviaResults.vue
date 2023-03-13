@@ -104,6 +104,7 @@ export default {
 
     position: absolute;
     right: 6.5%;
+    top: 5%;
 
     border-radius: 50px;
     padding: 3px;

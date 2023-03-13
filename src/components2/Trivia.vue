@@ -75,6 +75,7 @@ export default {
 
     position: absolute;
     right: 6.5%;
+    top: 5%;
 
     border-radius: 50px;
     padding: 3px;
@@ -202,5 +203,4 @@ export default {
     transform: translateX(-100%);
     animation: slide-in 0.045s ease forwards;
 }
-
 </style>

@@ -184,13 +184,11 @@ export default {
 </script>
 
 <style scoped>
-.trivia-controller{
-    margin: 12px 30px;
-    max-width: 650px;
-}
 .trivia-controller > div{
-    min-width: 100%;
-    min-height: 900px;
+    min-height: max-content;
+    height: 95vh;
+    max-height: 900px;
+
 
     border-radius: 30px;
     background-color: white;
@@ -199,9 +197,11 @@ export default {
 
      -webkit-box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54); 
     box-shadow: 0px 8px 26px -14px rgba(0,0,0,0.54);
-
-    display: flex;
-    flex-direction: column ;
+    overflow-y: scroll;
+}
+.trivia-controller{
+    margin: 12px 30px;
+    max-width: 650px;
 }
 @media only screen and (max-width: 700px) {
     .trivia-controller > div{
@@ -213,8 +213,7 @@ export default {
         margin: 12px 15px;
     }
 }
-
-.trivia-controller .main-menu{
-    min-height: max-content;
+.trivia-controller > .main-menu{
+   padding: 28px 40px;
 }
 </style>
