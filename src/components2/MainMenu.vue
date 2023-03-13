@@ -112,7 +112,8 @@ export default {
 
 <style scoped>
 .main-menu-container{
-
+    display: flex;
+    align-items: center;
 }
 .select-other-container > div{
     margin-bottom: 5px;
@@ -150,15 +151,28 @@ export default {
 .header-container ,.ilustration-container{ /* aaaaaaaaaaaaaa */
     margin-bottom: 20px;
 }
+.ilustration-container{
+
+}
 .ilustration-container > h1{
     font-size: 20px;
+    margin-bottom: 20px;
 }
 .ilustration-container > img{
-    height: 53vh;
-    max-width: 92%;
-
-    max-height: 550px;
-    max-width: 550px;
+    height: 80%;
+    width: 80%;
+}
+@media only screen and (max-height: 825px) {
+    .ilustration-container > img{
+        height: 65%;
+        width: 65%;
+    }
+}
+@media only screen and (max-height: 755px) {
+    .ilustration-container > img{
+        height: 50%;
+        width: 50%;
+    }
 }
 .header-container > h1{
     line-height: 42px;

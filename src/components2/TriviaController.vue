@@ -203,17 +203,20 @@ export default {
     margin: 12px 30px;
     max-width: 650px;
 }
+.trivia-controller > .main-menu{
+   padding: 0px 40px;
+}
 @media only screen and (max-width: 700px) {
     .trivia-controller > div{
         padding: 6vw;
+    }
+    .trivia-controller > .main-menu{
+        padding: 0px 6vw;
     }
 }
 @media only screen and (max-width: 510px) {
     .trivia-controller{
         margin: 12px 15px;
     }
-}
-.trivia-controller > .main-menu{
-   padding: 28px 40px;
 }
 </style>
