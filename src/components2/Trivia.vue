@@ -117,11 +117,6 @@ export default {
 
 #time-stamp-container > div{
     margin: 0 auto;
-    transition: 300ms ease;
-}
-#time-stamp-container > div:hover{
-    transform: scale(1.4);
-    transition: 300ms ease;
 }
 
 #question-container{
@@ -170,8 +165,7 @@ export default {
     box-shadow: inset 0px -13px 30px -7px rgba(0,0,0,0.25);
 }
 #answers-container >  button:hover{
-    transform: scale(1.05);
-    transition: 100ms ease;
+    background-color: rgba(204, 67, 67, 1);
 }
 #answers-container >  button:active{
     transform: scale(0.98);
