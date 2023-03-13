@@ -103,8 +103,8 @@ export default {
     width: 30px;
 
     position: absolute;
-    right: 6.5%;
-    top: 5%;
+    right: 4%;
+    top: 3%;
 
     border-radius: 50px;
     padding: 3px;
@@ -167,6 +167,11 @@ p{
 .questions-category{
     text-align: center;
     margin-bottom: 4px;
+}
+@media only screen and (max-width: 480px) {
+    .questions-category{
+        text-align: left;
+    }
 }
 
 .question-state{

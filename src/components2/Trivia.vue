@@ -74,8 +74,8 @@ export default {
     width: 30px;
 
     position: absolute;
-    right: 6.5%;
-    top: 5%;
+    right: 4%;
+    top: 3%;
 
     border-radius: 50px;
     padding: 3px;
@@ -117,6 +117,7 @@ export default {
 
 #time-stamp-container > div{
     margin: 0 auto;
+    transition: 300ms ease;
 }
 
 #question-container{
@@ -165,12 +166,15 @@ export default {
     box-shadow: inset 0px -13px 30px -7px rgba(0,0,0,0.25);
 }
 #answers-container >  button:hover{
-    background-color: rgba(204, 67, 67, 1);
+    transform: scale(1.05);
+    transition: 100ms ease;
 }
 #answers-container >  button:active{
     transform: scale(0.98);
 }
-
+#answers-container >  button:focus {
+    transform: scale(1);
+}
 
 @media only screen and (max-width: 700px) {
     #question-container{
