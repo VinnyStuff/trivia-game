@@ -111,10 +111,6 @@ export default {
 </script>
 
 <style scoped>
-.main-menu-container{
-    display: flex;
-    align-items: center;
-}
 .select-other-container > div{
     margin-bottom: 5px;
 }
@@ -148,30 +144,22 @@ export default {
     text-align: center;
     animation: showMenu 0.33s ease forwards;
 }
-.header-container ,.ilustration-container{ /* aaaaaaaaaaaaaa */
+.header-container{ /* aaaaaaaaaaaaaa */
     margin-bottom: 20px;
-}
-.ilustration-container{
-
 }
 .ilustration-container > h1{
     font-size: 20px;
-    margin-bottom: 20px;
 }
 .ilustration-container > img{
-    height: 80%;
-    width: 80%;
+    padding: 20px 30px;
+    max-height: 55vh;
+    max-width: 55vh;
 }
-@media only screen and (max-height: 825px) {
+@media only screen and (max-height: 815px) {
     .ilustration-container > img{
-        height: 65%;
-        width: 65%;
-    }
-}
-@media only screen and (max-height: 755px) {
-    .ilustration-container > img{
-        height: 50%;
-        width: 50%;
+        padding: 10px 40px;
+        max-height: 50vh;
+        max-width: 50vh;
     }
 }
 .header-container > h1{

@@ -204,14 +204,11 @@ export default {
     max-width: 650px;
 }
 .trivia-controller > .main-menu{
-   padding: 0px 40px;
+   height: max-content;
 }
 @media only screen and (max-width: 700px) {
     .trivia-controller > div{
         padding: 6vw;
-    }
-    .trivia-controller > .main-menu{
-        padding: 0px 6vw;
     }
 }
 @media only screen and (max-width: 510px) {
