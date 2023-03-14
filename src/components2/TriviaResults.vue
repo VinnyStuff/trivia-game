@@ -250,4 +250,10 @@ p{
 .not-answered > .question-state > svg{
     fill: #8B8B8B;
 }
+
+@media only screen and (max-width: 700px) {
+    p{
+        font-size: clamp(16px, 2.6vw, 18px);
+    }
+}
 </style>

@@ -266,4 +266,17 @@ p{
 .wrong-answer-chosen > p{
     color: white;
 }
+
+
+@media only screen and (max-width: 700px) {
+    .question-container{
+        font-size: clamp(12px, 2.6vw, 18px);
+    }
+    .category-container{
+        font-size: clamp(14px, 2.6vw, 16px);
+    }
+    .answers-container >  div{   
+        font-size: clamp(16px,  2.6vw, 20px)
+    }
+}
 </style>
