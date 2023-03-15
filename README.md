@@ -1,31 +1,31 @@
-# trivia-game
+# Trivia Game
 
-![image](https://user-images.githubusercontent.com/70545559/224568974-e3db9d39-7c05-43bd-9dc7-fbf1ba82f69a.png)
+This project is a trivia game developed using Vue.js. The game consists of several rounds of questions, where the player must select the correct answer within a given time limit.
 
-This template should help get you started developing with Vue 3 in Vite.
+## Features
 
-## Recommended IDE Setup
+- Multiple rounds of questions with different categories
+- Random selection of questions within each category
+- Timed answers for added difficulty
+- Score tracking and display
+- Interactive design with smooth transitions
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Technologies Used
 
-## Customize configuration
+- Vue.js
+- HTML
+- CSS
+- JavaScript
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## How to Run the Game
 
-## Project Setup
+1. Clone this repository to your local machine.
+2. Open the project directory in your terminal.
+3. Run `npm install` to install the necessary dependencies.
+4. Run `npm run serve` to start the development server.
+5. Open your web browser and navigate to http://localhost:8080 to play the game.
 
-```sh
-npm install
-```
+## External Tools
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+- [Open Trivia DB](https://opentdb.com/)
+- [Vuetify](https://vuetifyjs.com/en/)
