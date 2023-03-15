@@ -22,8 +22,7 @@ This project is a trivia game developed using Vue.js. The game consists of sever
 1. Clone this repository to your local machine.
 2. Open the project directory in your terminal.
 3. Run `npm install` to install the necessary dependencies.
-4. Run `npm run serve` to start the development server.
-5. Open your web browser and navigate to http://localhost:8080 to play the game.
+4. Run `npm run dev` to start the development server.
 
 ## External Tools
 
